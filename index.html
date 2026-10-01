@@ -1,18 +1,35 @@
 <!DOCTYPE html>
-<html
-<html lang="pt-BR" class="notranslate" translate="no"> lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="pt-BR" class="notranslate" translate="no">
+<head>
+<meta charset="UTF-8">
+<meta name="google" content="notranslate">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MY KNAY - Gratidão</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff0050">
-<style>*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial;padding-bottom:110px}.cabecalho{background:#ff0050;padding:14px;text-align:center;font-weight:900;font-size:18px;letter-spacing:1px}.generos{margin:12px}.massa{background:#1c1c1c;border-radius:16px;margin-bottom:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}.botao{border:none;padding:10px 14px;border-radius:10px;font-weight:900}.botao-abrir{background:#ffcc00;color:#000}.topo{background:#222;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:5}.item{background:#1a1a1a;border-left:4px solid #ff0050;border-radius:12px;margin:10px 10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;gap:6px}.item b{flex:1;cursor:pointer}.acoes{display:flex;gap:4px}.acao{border:none;padding:8px 9px;border-radius:8px;font-weight:bold}.barra{position:fixed;bottom:0;width:100%;background:#111;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;padding:8px;z-index:50}.barra2{position:fixed;bottom:56px;width:100%;background:#1a1a1a;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:4px;padding:6px;z-index:50;border-top:1px solid #333}
-.barra button,.barra2 button{padding:9px 2px;border:none;border-radius:8px;font-weight:900;font-size:11px}
-#modalP{display:none;position:fixed;inset:0;z-index:200;background:#000} #modalP video{width:100%;height:100%;object-fit:contain}
-#modalKwai{display:none;position:fixed;inset:0;z-index:210;background:#000} #kwaiBox{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}.kwaiItem{height:100vh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center}.kwaiItem video{width:100%;height:100%;object-fit:contain}
-.kwaiInfo{position:absolute;bottom:90px;left:12px;right:60px;background:rgba(0,0,0,.6);padding:8px 10px;border-radius:10px;font-size:14px}
-.modal{ display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;padding:15px;overflow:auto}
+<style>
+*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial;padding-bottom:115px}
+.cabecalho{background:#ff0050;padding:14px;text-align:center;font-weight:900;font-size:18px}
+.massa{background:#1c1c1c;border-radius:16px;margin:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
+.botao{border:none;padding:10px 14px;border-radius:10px;font-weight:900}
+.botao-abrir{background:#ffcc00;color:#000}
+.topo{background:#222;padding:10px;display:flex;justify-content:space-between;align-items:center}
+.item{background:#1a1a1a;border-left:4px solid #ff0050;border-radius:12px;margin:10px 10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.acoes{display:flex;gap:4px}
+.barra{position:fixed;bottom:0;width:100%;background:#111;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;padding:8px;z-index:50}
+.barra2{position:fixed;bottom:56px;width:100%;background:#1a1a1a;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:4px;padding:6px;z-index:50;border-top:1px solid #333}
+.barra button,.barra2 button{padding:10px 2px;border:none;border-radius:8px;font-weight:900;font-size:11px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;padding:15px;overflow:auto}
 .input{width:100%;padding:12px;border-radius:10px;border:1px solid #555;background:#222;color:#fff;margin:6px 0}
-</style></head><body>
-<div class="cabecalho">MY KNAY 🔥 (52 vídeos)</div>
+#modalP{display:none;position:fixed;inset:0;z-index:200;background:#000}
+#modalKwai{display:none;position:fixed;inset:0;z-index:210;background:#000}
+#kwaiBox{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.kwaiItem{height:100vh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center}
+.kwaiItem video{width:100%;height:100%;object-fit:contain}
+</style>
+</head>
+<body>
+<div class="cabecalho">MY KNAY 🔥</div>
 <div id="telaGeneros"></div><div id="telaFilmes" style="display:none"></div>
 
 <div class="barra2">
@@ -26,64 +43,130 @@
 <button id="btnVarios" style="background:#00aaff;color:#fff">📂 VÁRIOS</button>
 <button id="btnLink" style="background:#ff9800;color:#fff">🔗 LINK</button>
 <button id="btnGravar" style="background:#e91e63;color:#fff">📹 GRAVAR</button>
-<button id="btnKwai" style="background:#ff0050;color:#fff">▶️ KNAY</button>
+<button id="btnKnay" style="background:#ff0050;color:#fff">▶️ KNAY</button>
 </div>
 
 <input type="file" id="arquivoMultiplo" accept="video/*" multiple style="display:none">
 <input type="file" id="inputRestore" accept=".json" style="display:none">
 
-<div id="modalG" class="modal"><h2>Nova Pasta</h2><input id="nomeGenero" class="input" placeholder="Nome da pasta"><button onclick="criarGenero()" class="botao botao-abrir" style="width:100%;margin-top:10px">Criar</button><button onclick="fecharG()" style="width:100%;margin-top:8px;background:#333;color:#fff" class="botao">Fechar</button></div>
+<div id="modalG" class="modal"><h2>Nova Pasta</h2><input id="nomeGenero" class="input" placeholder="Nome da pasta"><button onclick="criarGenero()" class="botao botao-abrir" style="width:100%;margin-top:10px">Criar</button><button onclick="fecharG()" class="botao" style="width:100%;margin-top:8px;background:#333;color:#fff">Fechar</button></div>
+<div id="modalLink" class="modal"><h2>🔗 Adicionar Link</h2><input id="linkUrl" class="input" placeholder="https://...mp4"><input id="linkNome" class="input" placeholder="Nome do vídeo"><button onclick="addLink()" class="botao" style="background:#ff9800;width:100%">Salvar Link</button><button onclick="document.getElementById('modalLink').style.display='none'" class="botao" style="background:#333;color:#fff;width:100%;margin-top:6px">Fechar</button></div>
 
-<div id="modalLink" class="modal"><h2>🔗 Adicionar Link</h2><p style="color:#aaa;font-size:12px">Cole link direto.mp4, Google Drive, ou link do Kwai/TikTok (mp4)</p><input id="linkUrl" class="input" placeholder="https://...mp4"><input id="linkNome" class="input" placeholder="Nome do vídeo"><button onclick="addLink()" class="botao" style="background:#ff9800;width:100%">Salvar Link</button><button onclick="document.getElementById('modalLink').style.display='none'" class="botao" style="background:#333;color:#fff;width:100%;margin-top:6px">Fechar</button></div>
-
-<div id="modalGravar" class="modal"><h2>📹 Gravar igual Kwai</h2><video id="previewGravar" autoplay muted playsinline style="width:100%;height:60vh;background:#000;border-radius:12px;object-fit:cover"></video><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><button id="btnStartRec" onclick="startRec()" style="background:#ff0050" class="botao">🔴 INICIAR</button><button id="btnStopRec" onclick="stopRec()" disabled style="background:#333" class="botao">⏹️ PARAR E SALVAR</button></div><button onclick="fecharGravar()" class="botao" style="background:#333;color:#fff;width:100%;margin-top:8px">Fechar</button></div>
+<!-- MODAL GRAVAR COM FRENTE E TRAS -->
+<div id="modalGravar" class="modal">
+<h2>📹 Gravar igual Kwai</h2>
+<div style="position:relative">
+<video id="previewGravar" autoplay muted playsinline style="width:100%;height:65vh;background:#000;border-radius:16px;object-fit:cover"></video>
+<button onclick="trocarCamera()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:22px">🔄</button>
+<div id="qualCamera" style="position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);color:#fff;padding:5px 10px;border-radius:10px;font-size:12px">Frontal</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+<button id="btnStartRec" onclick="startRec()" style="background:#ff0050" class="botao">🔴 INICIAR</button>
+<button id="btnStopRec" onclick="stopRec()" disabled style="background:#333;color:#888" class="botao">⏹️ PARAR E SALVAR</button>
+</div>
+<button onclick="fecharGravar()" class="botao" style="background:#333;color:#fff;width:100%;margin-top:8px">Fechar</button>
+<p style="color:#aaa;font-size:11px;text-align:center;margin-top:8px">Clique 🔄 pra trocar entre frontal e traseira</p>
+</div>
 
 <div id="modalP"><button onclick="fecharPlayer()" style="position:fixed;top:10px;right:10px;z-index:101;background:#ffcc00;border:none;padding:10px;border-radius:8px">X</button><video id="v" controls autoplay playsinline style="width:100%;height:100%;background:#000"></video><div id="nomePlay" style="position:fixed;bottom:20px;left:10px;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:10px"></div></div>
-
 <div id="modalKwai"><button onclick="fecharKwai()" style="position:fixed;top:10px;left:10px;z-index:30;background:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:900">X FECHAR</button><div id="kwaiBox"></div></div>
 
 <script>
-let MEU_APP='MY-KNAY'; let chaveFixa='plugtv_'+MEU_APP+'_FINAL_UNICO'; let dbFixa='PlugTV_'+MEU_APP+'_FINAL_UNICO';
-let pastaAtual=0; let indiceAtual=0; let db=null; let dados; let jaAuto=false; let recorder=null; let chunks=[]; let streamRec=null;
-try{let a=localStorage.getItem(chaveFixa);if(a){dados=JSON.parse(a);}else{let antiga=localStorage.getItem('plugtv_MEU-KWAI_FINAL_UNICO')||localStorage.getItem('plugtv_MEU-KWAI_FINAL_UNICO')||localStorage.getItem('plugtv_v7');if(antiga){dados=JSON.parse(antiga);localStorage.setItem(chaveFixa,antiga);}else{dados=[{nome:"MY KNAY",filmes:[]}];}}}catch(e){dados=[{nome:"MY KNAY",filmes:[]}];}
-function salvar(){localStorage.setItem(chaveFixa,JSON.stringify(dados));document.querySelector('.cabecalho').innerText='MY KNAY 🔥 ('+dados.reduce((s,g)=>s+g.filmes.length,0)+' vídeos)';}
-let req=indexedDB.open(dbFixa,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos'))e.target.result.createObjectStore('videos',{keyPath:'id'});};req.onsuccess=e=>{db=e.target.result;renderizar();};req.onerror=()=>renderizar();
+let MEU_APP='MY-KNAY';
+let chaveFixa='plugtv_'+MEU_APP+'_FINAL_UNICO';
+let dbFixa='PlugTV_'+MEU_APP+'_FINAL_UNICO';
+let pastaAtual=0; let indiceAtual=0; let db=null; let dados; let jaAuto=false;
+let recorder=null; let chunks=[]; let streamRec=null; let cameraAtual='user';
+
+try{
+let atual=localStorage.getItem(chaveFixa);
+if(atual){dados=JSON.parse(atual);}
+else{
+let antiga=localStorage.getItem('plugtv_MEU-KWAI_FINAL_UNICO')||localStorage.getItem('plugtv_MEU-KWAI_FINAL_UNICO')||localStorage.getItem('plugtv_v7');
+if(antiga){dados=JSON.parse(antiga);localStorage.setItem(chaveFixa,antiga);}
+else{dados=[{nome:"MY KNAY",filmes:[]}];}
+}
+}catch(e){dados=[{nome:"MY KNAY",filmes:[]}];}
+
+function salvar(){localStorage.setItem(chaveFixa,JSON.stringify(dados));let total=dados.reduce((s,g)=>s+g.filmes.length,0);document.querySelector('.cabecalho').innerText='MY KNAY 🔥 ('+total+' vídeos)';}
+
+let req=indexedDB.open(dbFixa,1);
+req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos'))e.target.result.createObjectStore('videos',{keyPath:'id'});};
+req.onsuccess=e=>{db=e.target.result;renderizar();};
+req.onerror=()=>renderizar();
+
 function embaralhar(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function renderizar(){let h='<div class="generos">';dados.forEach((g,i)=>{h+=`<div class="massa"><div><b>${g.nome}</b> <small>(${g.filmes.length})</small></div><div><button class="botao botao-abrir" onclick="abrir(${i})">ABRIR</button> <button onclick="removerGenero(${i})" style="background:#333;color:#fff" class="botao">X</button></div></div>`;});h+='</div><div style="text-align:center"><button onclick="criarGeneroPrompt()" style="background:#ffcc00;color:#000" class="botao">+ GÊNERO</button></div>';document.getElementById('telaGeneros').innerHTML=h;document.getElementById('telaGeneros').style.display='block';document.getElementById('telaFilmes').style.display='none';salvar();autoKwai();}
-window.abrir=function(i){pastaAtual=i;let g=dados[i];let h=`<div class="topo"><button onclick="renderizar()" style="background:#333;color:#fff" class="botao">⬅ Voltar</button><b>${g.nome}</b><span>${g.filmes.length}</span></div>`;g.filmes.forEach((f,idx)=>{h+=`<div class="item"><b onclick="editarNome(${i},${idx})" title="Clique para editar">🎬 ${f.nome} ✏️</b><div class="acoes"><button class="acao" style="background:#ffcc00" onclick="play(${i},${idx})">▶️</button><button class="acao" style="background:#333;color:#fff" onclick="excluirVideo(${i},${idx})">🗑️</button></div></div>`;});if(!g.filmes.length)h+=`<p style="text-align:center;color:#666;margin-top:30px">Vazio - use VÁRIOS, LINK ou GRAVAR</p>`;document.getElementById('telaFilmes').innerHTML=h;document.getElementById('telaFilmes').style.display='block';document.getElementById('telaGeneros').style.display='none';}
+
+function renderizar(){
+let h='';dados.forEach((g,i)=>{h+=`<div class="massa"><div><b>${g.nome}</b> <small>(${g.filmes.length})</small></div><div><button class="botao botao-abrir" onclick="abrir(${i})">ABRIR</button> <button onclick="removerGenero(${i})" style="background:#333;color:#fff" class="botao">X</button></div></div>`;});
+document.getElementById('telaGeneros').innerHTML='<div style="padding:12px">'+h+'</div><div style="text-align:center"><button onclick="criarGeneroPrompt()" style="background:#ffcc00;color:#000" class="botao">+ GÊNERO</button></div>';
+document.getElementById('telaGeneros').style.display='block';document.getElementById('telaFilmes').style.display='none';salvar();autoKwai();
+}
+
+window.abrir=function(i){
+pastaAtual=i;let g=dados[i];
+let h=`<div class="topo"><button onclick="renderizar()" style="background:#333;color:#fff" class="botao">⬅ Voltar</button><b>${g.nome}</b><span>${g.filmes.length}</span></div>`;
+g.filmes.forEach((f,idx)=>{h+=`<div class="item"><b onclick="editarNome(${i},${idx})" style="flex:1;cursor:pointer">🎬 ${f.nome} ✏️</b><div class="acoes"><button onclick="play(${i},${idx})" style="background:#ffcc00" class="botao">▶️</button><button onclick="excluirVideo(${i},${idx})" style="background:#333;color:#fff" class="botao">🗑️</button></div></div>`;});
+if(!g.filmes.length)h+=`<p style="text-align:center;color:#666;margin-top:30px">Vazio - use VÁRIOS, LINK ou GRAVAR</p>`;
+document.getElementById('telaFilmes').innerHTML=h;
+document.getElementById('telaFilmes').style.display='block';document.getElementById('telaGeneros').style.display='none';
+}
+
 window.play=function(gi,fi){indiceAtual=fi;pastaAtual=gi;let f=dados[gi].filmes[fi];if(!f)return;document.getElementById('modalP').style.display='block';document.getElementById('nomePlay').innerText=f.nome;if(f.tipo=='link'){let v=document.getElementById('v');v.src=f.url;v.play();return;}let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(f.id);r.onsuccess=()=>{if(!r.result){alert('Arquivo não encontrado');return;}let url=URL.createObjectURL(r.result.blob);let v=document.getElementById('v');v.src=url;v.play();};}
 window.fecharPlayer=function(){document.getElementById('modalP').style.display='none';let v=document.getElementById('v');v.pause();v.src='';}
-window.excluirVideo=function(gi,fi){if(!confirm('Excluir "'+dados[gi].filmes[fi].nome+'"?'))return;let f=dados[gi].filmes[fi];if(f.id){try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}}dados[gi].filmes.splice(fi,1);salvar();abrir(gi);}
-window.editarNome=function(gi,fi){let atual=dados[gi].filmes[fi].nome;let novo=prompt('Novo nome do vídeo:',atual);if(novo&&novo.trim()){dados[gi].filmes[fi].nome=novo.trim();salvar();abrir(gi);}}
+window.excluirVideo=function(gi,fi){if(!confirm('Excluir "'+dados[gi].filmes[fi].nome+'"?'))return;let f=dados[gi].filmes[fi];if(f.id&&f.tipo!='link'){try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}}dados[gi].filmes.splice(fi,1);salvar();abrir(gi);}
+window.editarNome=function(gi,fi){let atual=dados[gi].filmes[fi].nome;let novo=prompt('Novo nome:',atual);if(novo&&novo.trim()){dados[gi].filmes[fi].nome=novo.trim();salvar();abrir(gi);}}
+
+// ARQUIVOS DO CELULAR
 document.getElementById('btnVarios').onclick=()=>document.getElementById('arquivoMultiplo').click();
-document.getElementById('arquivoMultiplo').onchange=async e=>{let files=[...e.target.files];if(!files.length)return;for(let file of files){let id=Date.now()+'_'+Math.random().toString(36).slice(2);await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob:file});tx.oncomplete=res;});dados[pastaAtual].filmes.push({id,nome:file.name,tipo:'file'});}salvar();abrir(pastaAtual);e.target.value='';}
+document.getElementById('arquivoMultiplo').onchange=async e=>{
+let files=[...e.target.files];if(!files.length)return;
+for(let file of files){let id=Date.now()+'_'+Math.random().toString(36).slice(2);await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob:file});tx.oncomplete=res;});dados[pastaAtual].filmes.push({id,nome:file.name,tipo:'file'});}
+salvar();abrir(pastaAtual);e.target.value='';
+}
+
+// LINK
 document.getElementById('btnLink').onclick=()=>document.getElementById('modalLink').style.display='block';
 window.addLink=function(){let url=document.getElementById('linkUrl').value.trim();let nome=document.getElementById('linkNome').value.trim()||'Link '+(dados[pastaAtual].filmes.length+1);if(!url)return alert('Cole o link');dados[pastaAtual].filmes.push({id:'link_'+Date.now(),nome,tipo:'link',url});salvar();document.getElementById('modalLink').style.display='none';document.getElementById('linkUrl').value='';document.getElementById('linkNome').value='';abrir(pastaAtual);}
-document.getElementById('btnGravar').onclick=async()=>{document.getElementById('modalGravar').style.display='block';try{streamRec=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:true});document.getElementById('previewGravar').srcObject=streamRec;}catch(err){alert('Permita câmera: '+err.message);}};
+
+// CAMERA FRONTAL E TRASEIRA - CORRIGIDO
+async function iniciarCamera(){
+if(streamRec){streamRec.getTracks().forEach(t=>t.stop());}
+try{
+streamRec=await navigator.mediaDevices.getUserMedia({video:{facingMode:cameraAtual},audio:true});
+document.getElementById('previewGravar').srcObject=streamRec;
+document.getElementById('qualCamera').innerText= cameraAtual=='user'? 'Frontal' : 'Traseira';
+}catch(err){alert('Erro câmera: '+err.message+' - Tenta permitir permissão');}
+}
+window.trocarCamera=function(){cameraAtual = cameraAtual=='user'? 'environment' : 'user';iniciarCamera();}
+document.getElementById('btnGravar').onclick=async()=>{document.getElementById('modalGravar').style.display='block';cameraAtual='user';await iniciarCamera();};
 window.fecharGravar=function(){document.getElementById('modalGravar').style.display='none';if(streamRec)streamRec.getTracks().forEach(t=>t.stop());if(recorder&&recorder.state!='inactive')recorder.stop();}
-window.startRec=function(){chunks=[];recorder=new MediaRecorder(streamRec);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=async()=>{let blob=new Blob(chunks,{type:'video/webm'});let id=Date.now()+'_'+Math.random().toString(36).slice(2);await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob});tx.oncomplete=res;});let nome=prompt('Nome para esse vídeo gravado?','Meu Knay '+new Date().toLocaleTimeString())||'Gravado';dados[pastaAtual].filmes.push({id,nome,tipo:'file'});salvar();abrir(pastaAtual);fecharGravar();};recorder.start();document.getElementById('btnStartRec').disabled=true;document.getElementById('btnStopRec').disabled=false;}
+window.startRec=function(){chunks=[];recorder=new MediaRecorder(streamRec);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=async()=>{let blob=new Blob(chunks,{type:'video/webm'});let id=Date.now()+'_'+Math.random().toString(36).slice(2);await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob});tx.oncomplete=res;});let nome=prompt('Nome do vídeo gravado?','Meu Knay '+new Date().toLocaleTimeString())||'Gravado';dados[pastaAtual].filmes.push({id,nome,tipo:'file'});salvar();abrir(pastaAtual);fecharGravar();};recorder.start();document.getElementById('btnStartRec').disabled=true;document.getElementById('btnStopRec').disabled=false;document.getElementById('btnStopRec').style.background='#ff0050';document.getElementById('btnStopRec').style.color='#fff';}
 window.stopRec=function(){if(recorder)recorder.stop();document.getElementById('btnStartRec').disabled=false;document.getElementById('btnStopRec').disabled=true;}
-function criarGeneroPrompt(){let n=prompt('Nome da nova pasta:');if(n){dados.push({nome:n,filmes:[]});salvar();renderizar();}}
+
+function criarGeneroPrompt(){let n=prompt('Nome da pasta:');if(n){dados.push({nome:n,filmes:[]});salvar();renderizar();}}
 window.criarGenero=function(){let n=document.getElementById('nomeGenero').value.trim();if(!n)return;dados.push({nome:n,filmes:[]});salvar();renderizar();fecharG();}
 window.fecharG=function(){document.getElementById('modalG').style.display='none';document.getElementById('nomeGenero').value='';}
-window.removerGenero=function(i){if(!confirm('Apagar pasta '+dados[i].nome+'?'))return;if(dados[i].filmes.length){if(!confirm('Tem '+dados[i].filmes.length+' vídeos. Apagar mesmo?'))return;dados[i].filmes.forEach(f=>{if(f.id)try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}});}dados.splice(i,1);salvar();renderizar();}
-document.getElementById('botaoReset').onclick=()=>{if(confirm('RESETAR TUDO? Apaga tudo do MY KNAY')){localStorage.removeItem(chaveFixa);indexedDB.deleteDatabase(dbFixa);location.reload();}}
-window.backup=function(){let dataStr=JSON.stringify(dados);let blob=new Blob([dataStr],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_my-knay_'+new Date().toISOString().slice(0,10)+'.json';a.click();alert('Backup baixado! Guarde esse arquivo.');}
-document.getElementById('inputRestore').onchange=e=>{let file=e.target.files[0];if(!file)return;let r=new FileReader();r.onload=ev=>{try{let imp=JSON.parse(ev.target.result);if(Array.isArray(imp)){if(confirm('Restaurar '+imp.length+' pastas? Isso vai somar com o atual.')){dados=imp;salvar();renderizar();alert('Restaurado!');}} }catch(err){alert('Arquivo inválido');}};r.readAsText(file);};
-window.compartilhar=function(){let url=location.href;if(navigator.share){navigator.share({title:'MY KNAY - Meu App',text:'Baixa meu app MY KNAY:',url});}else{prompt('Copie e mande no WhatsApp:',url);}}
+window.removerGenero=function(i){if(!confirm('Apagar pasta '+dados[i].nome+'?'))return;if(dados[i].filmes.length){if(!confirm('Tem '+dados[i].filmes.length+' vídeos dentro. Apagar?'))return;dados[i].filmes.forEach(f=>{if(f.id&&f.tipo!='link')try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}});}dados.splice(i,1);salvar();renderizar();}
+document.getElementById('botaoReset').onclick=()=>{if(confirm('RESETAR TUDO?')){localStorage.removeItem(chaveFixa);indexedDB.deleteDatabase(dbFixa);location.reload();}}
+window.backup=function(){let dataStr=JSON.stringify(dados);let blob=new Blob([dataStr],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_my-knay_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
+document.getElementById('inputRestore').onchange=e=>{let file=e.target.files[0];if(!file)return;let r=new FileReader();r.onload=ev=>{try{let imp=JSON.parse(ev.target.result);if(Array.isArray(imp)){if(confirm('Restaurar '+imp.length+' pastas?')){dados=imp;salvar();renderizar();}}}catch(err){alert('Arquivo inválido');}};r.readAsText(file);};
+window.compartilhar=function(){let url=location.href;if(navigator.share){navigator.share({title:'MY KNAY',text:'Olha meu app MY KNAY:',url});}else{prompt('Copia e manda:',url);}}
 window.renomearApp=function(){let n=prompt('Novo nome do app:',MEU_APP);if(n){localStorage.setItem('nome_app_custom',n);document.querySelector('.cabecalho').innerText=n+' 🔥';}}
 window.fecharKwai=function(){document.getElementById('modalKwai').style.display='none';document.getElementById('kwaiBox').innerHTML='';jaAuto=false;}
-document.getElementById('btnKwai').onclick=()=>{
-  let todos=[];dados.forEach((g,gi)=>{g.filmes.forEach((f,fi)=>{todos.push({g:gi,f:fi,obj:f});});});
-  if(!todos.length)return alert('Adicione vídeos primeiro');
-  todos=embaralhar(todos);
-  let h='';todos.forEach(t=>{let isLink=t.obj.tipo=='link';h+=`<div class="kwaiItem"><video ${isLink?'src="'+t.obj.url+'"':''} controls playsinline loop preload="metadata" data-id="${t.obj.id}" data-link="${isLink?'1':'0'}"></video><div class="kwaiInfo"><b>${t.obj.nome}</b><br><small onclick="editarNome(${t.g},${t.f})">✏️ editar</small> <span onclick="excluirVideo(${t.g},${t.f});fecharKwai();setTimeout(()=>document.getElementById('btnKwai').click(),300)" style="float:right">🗑️ excluir</span></div></div>`;});
-  document.getElementById('kwaiBox').innerHTML=h;document.getElementById('modalKwai').style.display='block';
-  document.querySelectorAll('#kwaiBox video').forEach((v,idx)=>{
-    if(v.dataset.link=='0'){let id=v.dataset.id;let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(id);r.onsuccess=()=>{if(r.result){v.src=URL.createObjectURL(r.result.blob);if(idx==0)v.play().catch(()=>{});}};}
-    else if(idx==0)v.play().catch(()=>{});
-    v.onended=()=>{let prox=v.closest('.kwaiItem').nextElementSibling;if(prox){prox.scrollIntoView({behavior:'smooth'});let vv=prox.querySelector('video');if(vv)vv.play();}else{document.getElementById('btnKwai').click();}};
-  });
+document.getElementById('btnKnay').onclick=()=>{
+let todos=[];dados.forEach((g,gi)=>{g.filmes.forEach((f,fi)=>{todos.push({g:gi,f:fi,obj:f});});});
+if(!todos.length)return alert('Adicione vídeos primeiro');
+todos=embaralhar(todos);
+let h='';todos.forEach(t=>{let isLink=t.obj.tipo=='link';h+=`<div class="kwaiItem"><video ${isLink?'src="'+t.obj.url+'"':''} controls playsinline loop preload="metadata" data-id="${t.obj.id}" data-link="${isLink?'1':'0'}"></video><div style="position:absolute;bottom:90px;left:12px;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:10px">${t.obj.nome}</div></div>`;});
+document.getElementById('kwaiBox').innerHTML=h;document.getElementById('modalKwai').style.display='block';
+document.querySelectorAll('#kwaiBox video').forEach((v,idx)=>{
+if(v.dataset.link=='0'){let id=v.dataset.id;let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(id);r.onsuccess=()=>{if(r.result){v.src=URL.createObjectURL(r.result.blob);if(idx==0)v.play().catch(()=>{});}};}
+else if(idx==0)v.play().catch(()=>{});
+v.onended=()=>{let prox=v.closest('.kwaiItem').nextElementSibling;if(prox){prox.scrollIntoView({behavior:'smooth'});let vv=prox.querySelector('video');if(vv)vv.play();}};
+});
 };
-function autoKwai(){if(jaAuto)return;let total=0;dados.forEach(g=>total+=g.filmes.length);if(total>0&&db&&localStorage.getItem('auto_knay')!=='0'){jaAuto=true;setTimeout(()=>document.getElementById('btnKwai').click(),900);}}
-</script></body></html>
+function autoKwai(){if(jaAuto)return;let total=0;dados.forEach(g=>total+=g.filmes.length);if(total>0&&db){jaAuto=true;setTimeout(()=>document.getElementById('btnKnay').click(),900);}}
+</script>
+</body>
+</html>
