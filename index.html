@@ -1,106 +1,213 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="notranslate" translate="no">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="google" content="notranslate">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MY KNAY - Gratidão</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>My Knay - Efeitos Kwai</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icone-myknay.png">
+<link rel="apple-touch-icon" href="icone-myknay.png">
+<meta name="theme-color" content="#ff3d00">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial;padding-bottom:115px}
-.cabecalho{background:#ff0050;padding:14px;text-align:center;font-weight:900;font-size:18px}
-.massa{background:#1c1c1c;border-radius:16px;margin:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
-.botao{border:none;padding:10px 14px;border-radius:10px;font-weight:900}
-.botao-abrir{background:#ffcc00;color:#000}
-.topo{background:#222;padding:10px;display:flex;justify-content:space-between;align-items:center}
-.item{background:#1a1a1a;border-left:4px solid #ff0050;border-radius:12px;margin:10px 10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.barra{position:fixed;bottom:0;width:100%;background:#111;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;padding:8px;z-index:50}
-.barra2{position:fixed;bottom:56px;width:100%;background:#1a1a1a;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:4px;padding:6px;z-index:50;border-top:1px solid #333}
-.barra button,.barra2 button{padding:10px 2px;border:none;border-radius:8px;font-weight:900;font-size:11px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;padding:15px;overflow:auto}
-.input{width:100%;padding:12px;border-radius:10px;border:1px solid #555;background:#222;color:#fff;margin:6px 0}
-#modalP{display:none;position:fixed;inset:0;z-index:200;background:#000}
-#modalKwai{display:none;position:fixed;inset:0;z-index:210;background:#000}
-#kwaiBox{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
-.kwaiItem{height:100vh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
-.kwaiItem video{width:100%;height:100%;object-fit:contain;background:#000}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000;color:#fff;font-family:Arial;overflow:hidden;height:100vh;width:100vw}
+#videoWrap{position:relative;width:100vw;height:100vh;overflow:hidden;background:#111}
+video,canvas{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover}
+#canvas{pointer-events:none}
+.top{position:absolute;top:0;left:0;right:0;z-index:10;display:flex;justify-content:space-between;padding:12px;background:linear-gradient(to bottom, rgba(0,0,0,0.6), transparent)}
+.logo{display:flex;align-items:center;gap:8px;font-weight:bold;font-size:18px}
+.logo img{width:36px;height:36px;border-radius:8px;background:#fff;padding:2px}
+.btn-top{background:rgba(255,255,255,0.2);border:none;color:#fff;padding:8px 12px;border-radius:20px;backdrop-filter:blur(10px)}
+.efeitos{position:absolute;bottom:110px;left:0;right:0;z-index:10;display:flex;gap:10px;overflow-x:auto;padding:10px 12px;scrollbar-width:none}
+.efeitos::-webkit-scrollbar{display:none}
+.efeito{min-width:62px;height:82px;background:rgba(255,255,255,0.15);border:2px solid transparent;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;backdrop-filter:blur(10px);font-size:11px;text-align:center;cursor:pointer}
+.efeito.ativo{border-color:#ff3d00;background:rgba(255,61,0,0.3)}
+.efeito span{font-size:26px;margin-bottom:4px}
+.controles{position:absolute;bottom:0;left:0;right:0;z-index:10;background:linear-gradient(to top, rgba(0,0,0,0.9), transparent);padding:16px 20px 20px;display:flex;justify-content:space-around;align-items:center}
+.btn-gravar{width:78px;height:78px;border-radius:50%;background:transparent;border:4px solid #fff;display:flex;align-items:center;justify-content:center}
+.btn-gravar.gravando{border-color:#ff0000;animation:pulse 1s infinite}
+.btn-gravar div{width:62px;height:62px;background:#ff0000;border-radius:50%;transition:0.2s}
+.btn-gravar.gravando div{width:36px;height:36px;border-radius:8px;background:#ff0000}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+.btn-lado{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.2);border:none;color:#fff;font-size:22px;backdrop-filter:blur(10px)}
+.timer{position:absolute;top:60px;left:50%;transform:translateX(-50%);background:#ff0000;color:#fff;padding:4px 12px;border-radius:20px;font-size:14px;font-weight:bold;z-index:10;display:none}
+.galeria{position:fixed;bottom:0;left:0;right:0;background:#0a0a0a;z-index:100;height:60vh;border-radius:20px 20px 0 0;display:none;overflow:auto;padding:16px}
+.galeria.show{display:block}
+.vidItem{background:#1a1a1a;border-radius:12px;padding:8px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
 </style>
 </head>
 <body>
-<div class="cabecalho">MY KNAY 🔥</div>
-<div id="telaGeneros"></div><div id="telaFilmes" style="display:none"></div>
-<div class="barra2">
-<button onclick="backup()" style="background:#333;color:#fff">💾 BACKUP</button>
-<button onclick="document.getElementById('inputRestore').click()" style="background:#333;color:#fff">♻️ RESTAURAR</button>
-<button onclick="compartilhar()" style="background:#00c853;color:#fff">📤 CONVIDAR</button>
-<button onclick="renomearApp()" style="background:#6c5ce7;color:#fff">✏️ NOME</button>
-<button id="botaoReset" style="background:#fff;color:#000">🧹 RESET</button>
+<div id="videoWrap">
+<video id="video" autoplay muted playsinline></video>
+<canvas id="canvas"></canvas>
+<div class="timer" id="timer">00:00</div>
+<div class="top">
+<div class="logo"><img src="icone-myknay.png"> My Knay</div>
+<button class="btn-top" onclick="trocarCamera()">🔄 Virar</button>
 </div>
-<div class="barra">
-<button id="btnVarios" style="background:#00aaff;color:#fff">📂 VÁRIOS</button>
-<button id="btnLink" style="background:#ff9800;color:#fff">🔗 LINK</button>
-<button id="btnGravar" style="background:#e91e63;color:#fff">📹 GRAVAR</button>
-<button id="btnKnay" style="background:#ff0050;color:#fff">▶️ KNAY</button>
+<div class="efeitos" id="listaEfeitos"></div>
+<div class="controles">
+<button class="btn-lado" onclick="abrirGaleria()">🖼️</button>
+<div class="btn-gravar" id="btnGravar" onclick="gravar()"><div></div></div>
+<button class="btn-lado" onclick="tirarFoto()">📸</button>
 </div>
-<input type="file" id="arquivoMultiplo" accept="video/*" multiple style="display:none">
-<input type="file" id="inputRestore" accept=".json" style="display:none">
-<div id="modalLink" class="modal"><h2>🔗 Adicionar Link</h2><input id="linkUrl" class="input" placeholder="https://...mp4"><input id="linkNome" class="input" placeholder="Nome"><button onclick="addLink()" class="botao" style="background:#ff9800;width:100%">Salvar</button><button onclick="document.getElementById('modalLink').style.display='none'" class="botao" style="background:#333;color:#fff;width:100%;margin-top:6px">Fechar</button></div>
-<div id="modalGravar" class="modal">
-<h2>📹 Gravar</h2>
-<div style="position:relative">
-<video id="previewGravar" autoplay muted playsinline style="width:100%;height:65vh;background:#000;border-radius:16px;object-fit:cover"></video>
-<button onclick="trocarCamera()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:22px">🔄</button>
-<div id="qualCamera" style="position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);color:#fff;padding:5px 10px;border-radius:10px;font-size:12px">Frontal</div>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
-<button id="btnStartRec" onclick="startRec()" style="background:#ff0050" class="botao">🔴 INICIAR</button>
-<button id="btnStopRec" onclick="stopRec()" disabled style="background:#333;color:#888" class="botao">⏹️ PARAR</button>
+<div class="galeria" id="galeria">
+<h3 style="color:#ff3d00;margin-bottom:12px">Meus Vídeos My Knay</h3>
+<div id="listaVideos"><small style="color:#888">Nenhum vídeo ainda</small></div>
+<br>
+<button onclick="fecharGaleria()" style="width:100%;padding:12px;background:#ff3d00;border:none;border-radius:10px;color:#fff;font-weight:bold">FECHAR</button>
 </div>
-<button onclick="fecharGravar()" class="botao" style="background:#333;color:#fff;width:100%;margin-top:8px">Fechar</button>
-</div>
-<div id="modalP"><button onclick="fecharPlayer()" style="position:fixed;top:10px;right:10px;z-index:101;background:#ffcc00;border:none;padding:10px;border-radius:8px">X</button><video id="v" controls autoplay playsinline style="width:100%;height:100%;background:#000"></video><div id="nomePlay" style="position:fixed;bottom:20px;left:10px;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:10px"></div></div>
-<div id="modalKwai"><button onclick="fecharKwai()" style="position:fixed;top:10px;left:10px;z-index:30;background:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:900">X FECHAR</button><div id="kwaiBox"></div></div>
 <script>
-let chaveFixa='plugtv_MY-KNAY_FINAL_UNICO';let dbFixa='PlugTV_MY-KNAY_FINAL_UNICO';let pastaAtual=0;let db=null;let dados;let jaAuto=false;let recorder=null;let chunks=[];let streamRec=null;let cameraAtual='user';
-try{let atual=localStorage.getItem(chaveFixa);if(atual){dados=JSON.parse(atual);}else{let antiga=localStorage.getItem('plugtv_MEU-KWAI_FINAL_UNICO')||localStorage.getItem('plugtv_v7');if(antiga){dados=JSON.parse(antiga);localStorage.setItem(chaveFixa,antiga);}else{dados=[{nome:"MY KNAY",filmes:[]}];}}}catch(e){dados=[{nome:"MY KNAY",filmes:[]}];}
-function salvar(){localStorage.setItem(chaveFixa,JSON.stringify(dados));let total=dados.reduce((s,g)=>s+g.filmes.length,0);document.querySelector('.cabecalho').innerText='MY KNAY 🔥 ('+total+' vídeos)';}
-let req=indexedDB.open(dbFixa,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos'))e.target.result.createObjectStore('videos',{keyPath:'id'});};req.onsuccess=e=>{db=e.target.result;renderizar();};req.onerror=()=>renderizar();
-function embaralhar(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function renderizar(){let h='';dados.forEach((g,i)=>{h+=`<div class="massa"><div><b>${g.nome}</b> <small>(${g.filmes.length})</small></div><div><button class="botao botao-abrir" onclick="abrir(${i})">ABRIR</button> <button onclick="removerGenero(${i})" style="background:#333;color:#fff" class="botao">X</button></div></div>`;});document.getElementById('telaGeneros').innerHTML='<div style="padding:12px">'+h+'</div><div style="text-align:center"><button onclick="criarGeneroPrompt()" style="background:#ffcc00;color:#000" class="botao">+ GÊNERO</button></div>';document.getElementById('telaGeneros').style.display='block';document.getElementById('telaFilmes').style.display='none';salvar();}
-window.abrir=function(i){pastaAtual=i;let g=dados[i];let h=`<div class="topo"><button onclick="renderizar()" style="background:#333;color:#fff" class="botao">⬅ Voltar</button><b>${g.nome}</b><span>${g.filmes.length}</span></div>`;g.filmes.forEach((f,idx)=>{h+=`<div class="item"><b onclick="editarNome(${i},${idx})" style="flex:1;cursor:pointer">🎬 ${f.nome} ✏️</b><div style="display:flex;gap:4px"><button onclick="play(${i},${idx})" style="background:#ffcc00" class="botao">▶️</button><button onclick="excluirVideo(${i},${idx})" style="background:#333;color:#fff" class="botao">🗑️</button></div></div>`;});if(!g.filmes.length)h+=`<p style="text-align:center;color:#666;margin-top:30px">Vazio</p>`;document.getElementById('telaFilmes').innerHTML=h;document.getElementById('telaFilmes').style.display='block';document.getElementById('telaGeneros').style.display='none';}
-window.play=function(gi,fi){let f=dados[gi].filmes[fi];document.getElementById('modalP').style.display='block';document.getElementById('nomePlay').innerText=f.nome;if(f.tipo=='link'){let v=document.getElementById('v');v.src=f.url;v.play();return;}let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(f.id);r.onsuccess=()=>{if(r.result){let v=document.getElementById('v');v.src=URL.createObjectURL(r.result.blob);v.play();}};}
-window.fecharPlayer=function(){document.getElementById('modalP').style.display='none';let v=document.getElementById('v');v.pause();v.src='';}
-window.excluirVideo=function(gi,fi){if(!confirm('Excluir?'))return;let f=dados[gi].filmes[fi];if(f.id&&f.tipo!='link'){try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}}dados[gi].filmes.splice(fi,1);salvar();abrir(gi);}
-window.editarNome=function(gi,fi){let n=prompt('Novo nome:',dados[gi].filmes[fi].nome);if(n){dados[gi].filmes[fi].nome=n;salvar();abrir(gi);}}
-document.getElementById('btnVarios').onclick=()=>document.getElementById('arquivoMultiplo').click();
-document.getElementById('arquivoMultiplo').onchange=async e=>{let files=[...e.target.files];for(let file of files){let id=Date.now()+'_'+Math.random();await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob:file});tx.oncomplete=res;});dados[pastaAtual].filmes.push({id,nome:file.name,tipo:'file'});}salvar();abrir(pastaAtual);e.target.value='';}
-document.getElementById('btnLink').onclick=()=>document.getElementById('modalLink').style.display='block';
-window.addLink=function(){let url=document.getElementById('linkUrl').value.trim();let nome=document.getElementById('linkNome').value.trim()||'Link';if(!url)return;dados[pastaAtual].filmes.push({id:'link_'+Date.now(),nome,tipo:'link',url});salvar();document.getElementById('modalLink').style.display='none';abrir(pastaAtual);}
-async function iniciarCamera(){if(streamRec)streamRec.getTracks().forEach(t=>t.stop());try{streamRec=await navigator.mediaDevices.getUserMedia({video:{facingMode:cameraAtual},audio:true});document.getElementById('previewGravar').srcObject=streamRec;document.getElementById('qualCamera').innerText=cameraAtual=='user'?'Frontal':'Traseira';}catch(err){alert('Erro: '+err.message);}}
-window.trocarCamera=function(){cameraAtual=cameraAtual=='user'?'environment':'user';iniciarCamera();}
-document.getElementById('btnGravar').onclick=async()=>{document.getElementById('modalGravar').style.display='block';cameraAtual='user';await iniciarCamera();};
-window.fecharGravar=function(){document.getElementById('modalGravar').style.display='none';if(streamRec)streamRec.getTracks().forEach(t=>t.stop());}
-window.startRec=function(){chunks=[];recorder=new MediaRecorder(streamRec);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};recorder.onstop=async()=>{let blob=new Blob(chunks,{type:'video/webm'});let id=Date.now()+'_'+Math.random();await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob});tx.oncomplete=res;});let nome=prompt('Nome:','Gravado '+new Date().toLocaleTimeString())||'Gravado';dados[pastaAtual].filmes.push({id,nome,tipo:'file'});salvar();abrir(pastaAtual);fecharGravar();};recorder.start();document.getElementById('btnStartRec').disabled=true;document.getElementById('btnStopRec').disabled=false;document.getElementById('btnStopRec').style.background='#ff0050';document.getElementById('btnStopRec').style.color='#fff';}
-window.stopRec=function(){if(recorder)recorder.stop();document.getElementById('btnStartRec').disabled=false;document.getElementById('btnStopRec').disabled=true;}
-function criarGeneroPrompt(){let n=prompt('Nome da pasta:');if(n){dados.push({nome:n,filmes:[]});salvar();renderizar();}}
-window.removerGenero=function(i){if(confirm('Apagar pasta?')){dados.splice(i,1);salvar();renderizar();}}
-document.getElementById('botaoReset').onclick=()=>{if(confirm('RESETAR TUDO?')){localStorage.removeItem(chaveFixa);indexedDB.deleteDatabase(dbFixa);location.reload();}}
-window.backup=function(){let blob=new Blob([JSON.stringify(dados)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup.json';a.click();}
-document.getElementById('inputRestore').onchange=e=>{let file=e.target.files[0];if(!file)return;let r=new FileReader();r.onload=ev=>{try{let imp=JSON.parse(ev.target.result);if(Array.isArray(imp)){dados=imp;salvar();renderizar();}}catch{}};r.readAsText(file);};
-window.compartilhar=function(){let url=location.href;if(navigator.share)navigator.share({title:'MY KNAY',url});else prompt('Copia:',url);}
-window.renomearApp=function(){let n=prompt('Nome:');if(n)document.querySelector('.cabecalho').innerText=n+' 🔥';}
-window.fecharKwai=function(){document.getElementById('modalKwai').style.display='none';document.getElementById('kwaiBox').innerHTML='';}
-document.getElementById('btnKnay').onclick=()=>{
-let todos=[];dados.forEach((g,gi)=>{g.filmes.forEach((f,fi)=>{todos.push({obj:f});});});
-if(!todos.length)return alert('Adicione vídeos');
-todos=embaralhar(todos);
-let h='';todos.forEach(t=>{let isLink=t.obj.tipo=='link';h+=`<div class="kwaiItem"><video ${isLink?'src="'+t.obj.url+'"':''} playsinline loop preload="metadata" data-id="${t.obj.id}" data-link="${isLink?'1':'0'}"></video><div style="position:absolute;bottom:90px;left:12px;background:rgba(0,0,0,.6);padding:8px 12px;border-radius:12px"><b>${t.obj.nome}</b></div></div>`;});
-document.getElementById('kwaiBox').innerHTML=h;document.getElementById('modalKwai').style.display='block';
-let vids=document.querySelectorAll('#kwaiBox video');
-vids.forEach((v,idx)=>{if(v.dataset.link=='0'){let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(v.dataset.id);r.onsuccess=()=>{if(r.result){v.src=URL.createObjectURL(r.result.blob);if(idx===0)v.play().catch(()=>{});}};}else{if(idx===0)v.play().catch(()=>{});}});
-vids.forEach(v=>{v.addEventListener('play',()=>{vids.forEach(o=>{if(o!==v)o.pause();});});v.addEventListener('click',()=>{if(v.paused)v.play();else v.pause();});});
-let observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){vids.forEach(x=>{if(x!==entry.target)x.pause();});entry.target.play().catch(()=>{});}else{entry.target.pause();}});},{threshold:0.6,root:document.getElementById('kwaiBox')});
-vids.forEach(v=>observer.observe(v));
-};
+let video=document.getElementById('video');
+let canvas=document.getElementById('canvas');
+let ctx=canvas.getContext('2d');
+let stream=null;
+let gravando=false;
+let mediaRecorder=null;
+let chunks=[];
+let tempo=null;
+let seg=0;
+let facing='user';
+let efeitoAtual='original';
+const efeitosKwai=[
+ {id:'original', nome:'Original', icon:'✨', filter:'none', emoji:''},
+ {id:'beleza', nome:'Beleza', icon:'💖', filter:'brightness(1.18) contrast(1.08) saturate(1.12) blur(0.4px)', emoji:''},
+ {id:'suave', nome:'Suave', icon:'🌸', filter:'brightness(1.1) contrast(0.95) saturate(0.9) blur(0.6px)', emoji:''},
+ {id:'vintage', nome:'Vintage', icon:'📼', filter:'sepia(0.5) contrast(1.2) brightness(0.95) saturate(1.2)', emoji:''},
+ {id:'cinema', nome:'Cinema', icon:'🎬', filter:'contrast(1.35) brightness(1.05) saturate(0.2)', emoji:''},
+ {id:'quente', nome:'Quente', icon:'🔥', filter:'sepia(0.25) saturate(1.6) hue-rotate(-15deg) brightness(1.05)', emoji:''},
+ {id:'frio', nome:'Frio', icon:'❄️', filter:'hue-rotate(180deg) saturate(0.8) brightness(1.1) contrast(1.1)', emoji:''},
+ {id:'neon', nome:'Neon', icon:'🌈', filter:'hue-rotate(90deg) saturate(2) contrast(1.3)', emoji:''},
+ {id:'dog', nome:'Dog', icon:'🐶', filter:'brightness(1.1) saturate(1.2)', emoji:'🐶'},
+ {id:'coracao', nome:'Love', icon:'😍', filter:'brightness(1.15) saturate(1.3)', emoji:'😍'},
+ {id:'oculos', nome:'Óculos', icon:'😎', filter:'contrast(1.1) brightness(1.1)', emoji:'😎'},
+ {id:'choro', nome:'Choro', icon:'😭', filter:'saturate(1.3)', emoji:'😭'},
+];
+let dbVideos = JSON.parse(localStorage.getItem('myknay_videos')||'[]');
+function montarEfeitos(){
+ let div=document.getElementById('listaEfeitos');
+ div.innerHTML='';
+ efeitosKwai.forEach(e=>{
+   div.innerHTML+=`<div class="efeito ${e.id===efeitoAtual?'ativo':''}" onclick="aplicarEfeito('${e.id}')"><span>${e.icon}</span>${e.nome}</div>`;
+ });
+}
+function aplicarEfeito(id){
+ efeitoAtual=id;
+ let e=efeitosKwai.find(x=>x.id===id);
+ video.style.filter=e.filter;
+ montarEfeitos();
+ if(e.emoji){ startEmoji(e.emoji); } else { stopEmoji(); }
+}
+let emojiInterval=null;
+let emojiAtivo='';
+function startEmoji(emo){
+ stopEmoji();
+ emojiAtivo=emo;
+ emojiInterval=setInterval(()=>{
+   ctx.clearRect(0,0,canvas.width,canvas.height);
+   ctx.font='80px Arial';
+   ctx.fillText(emo, 30, 120);
+ },100);
+}
+function stopEmoji(){
+ if(emojiInterval){clearInterval(emojiInterval);emojiInterval=null;}
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+}
+async function iniciarCamera(){
+ if(stream){stream.getTracks().forEach(t=>t.stop());}
+ try{
+   stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing, width:1280, height:720}, audio:true});
+   video.srcObject=stream;
+   await video.play();
+   canvas.width=video.videoWidth||720;
+   canvas.height=video.videoHeight||1280;
+ }catch(err){alert('Permita a câmera: '+err.message);}
+}
+function trocarCamera(){
+ facing=facing==='user'?'environment':'user';
+ iniciarCamera();
+}
+function gravar(){
+ if(!gravando){
+   chunks=[];
+   let mixedStream = new MediaStream([...stream.getVideoTracks(), stream.getAudioTracks()[0]]);
+   let canvasGravar=document.createElement('canvas');
+   let ctxG=canvasGravar.getContext('2d');
+   canvasGravar.width=720;
+   canvasGravar.height=1280;
+   let filter = efeitosKwai.find(x=>x.id===efeitoAtual).filter;
+   mediaRecorder = new MediaRecorder(mixedStream, {mimeType:'video/webm'});
+   mediaRecorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+   mediaRecorder.onstop=()=>{
+     let blob=new Blob(chunks,{type:'video/webm'});
+     let url=URL.createObjectURL(blob);
+     salvarVideo(url, blob);
+   };
+   let desenhar=setInterval(()=>{
+     if(!gravando){clearInterval(desenhar);return;}
+     ctxG.filter=filter;
+     ctxG.drawImage(video,0,0,canvasGravar.width,canvasGravar.height);
+     if(emojiAtivo){
+       ctxG.filter='none';
+       ctxG.font='80px Arial';
+       ctxG.fillText(emojiAtivo,30,120);
+     }
+   },33);
+   mediaRecorder.start();
+   gravando=true;
+   document.getElementById('btnGravar').classList.add('gravando');
+   document.getElementById('timer').style.display='block';
+   seg=0;
+   tempo=setInterval(()=>{seg++;let m=String(Math.floor(seg/60)).padStart(2,'0');let s=String(seg%60).padStart(2,'0');document.getElementById('timer').innerText=m+':'+s;},1000);
+ } else {
+   mediaRecorder.stop();
+   gravando=false;
+   document.getElementById('btnGravar').classList.remove('gravando');
+   document.getElementById('timer').style.display='none';
+   clearInterval(tempo);
+ }
+}
+function salvarVideo(url, blob){
+ let id=Date.now();
+ dbVideos.unshift({id:id, data:new Date().toLocaleString(), duracao:seg});
+ localStorage.setItem('myknay_videos', JSON.stringify(dbVideos));
+ let a=document.createElement('a');
+ a.href=url;
+ a.download='myknay_'+id+'.webm';
+ a.click();
+ alert('Vídeo salvo! '+seg+'s com efeito '+efeitoAtual);
+ renderGaleria();
+}
+function tirarFoto(){
+ let c=document.createElement('canvas');
+ c.width=video.videoWidth;
+ c.height=video.videoHeight;
+ let ct=c.getContext('2d');
+ ct.filter=efeitosKwai.find(x=>x.id===efeitoAtual).filter;
+ ct.drawImage(video,0,0);
+ if(emojiAtivo){ct.filter='none';ct.font='80px Arial';ct.fillText(emojiAtivo,30,120);}
+ let url=c.toDataURL('image/png');
+ let a=document.createElement('a');
+ a.href=url;
+ a.download='myknay_foto_'+Date.now()+'.png';
+ a.click();
+}
+function abrirGaleria(){document.getElementById('galeria').classList.add('show');renderGaleria();}
+function fecharGaleria(){document.getElementById('galeria').classList.remove('show');}
+function renderGaleria(){
+ let div=document.getElementById('listaVideos');
+ if(dbVideos.length===0){div.innerHTML='<small style="color:#888">Nenhum vídeo ainda. Grave com efeitos!</small>';return;}
+ div.innerHTML='';
+ dbVideos.forEach(v=>{
+   div.innerHTML+=`<div class="vidItem"><span>📹 ${v.data} - ${v.duracao}s</span><button onclick="apagarVideo(${v.id})" style="background:#ff0000;border:none;color:#fff;padding:6px 10px;border-radius:8px">🗑️</button></div>`;
+ });
+}
+function apagarVideo(id){if(confirm('Apagar?')){dbVideos=dbVideos.filter(v=>v.id!==id);localStorage.setItem('myknay_videos',JSON.stringify(dbVideos));renderGaleria();}}
+montarEfeitos();
+iniciarCamera();
 </script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
 </body>
 </html>
