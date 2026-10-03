@@ -1,169 +1,128 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="notranslate" translate="no">
-<head>
-<meta charset="UTF-8">
-<meta name="google" content="notranslate">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MY KNAY - Gratidão</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icone-myknay.png">
-<link rel="apple-touch-icon" href="icone-myknay.png">
-<meta name="theme-color" content="#ff0050">
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MY KNAY - 223 VIDEOS - ESCALA 5x1</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial;padding-bottom:115px}
-.cabecalho{background:#ff0050;padding:14px;text-align:center;font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;gap:8px}
-.cabecalho img{width:28px;height:28px;border-radius:6px;background:#fff;padding:2px}
-.massa{background:#1c1c1c;border-radius:16px;margin:12px;padding:14px;display:flex;justify-content:space-between;align-items:center}
-.botao{border:none;padding:10px 14px;border-radius:10px;font-weight:900}
-.botao-abrir{background:#ffcc00;color:#000}
-.topo{background:#222;padding:10px;display:flex;justify-content:space-between;align-items:center}
-.item{background:#1a1a1a;border-left:4px solid #ff0050;border-radius:12px;margin:10px 10px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.barra{position:fixed;bottom:0;width:100%;background:#111;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;padding:8px;z-index:50}
-.barra2{position:fixed;bottom:56px;width:100%;background:#1a1a1a;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:4px;padding:6px;z-index:50;border-top:1px solid #333}
-.barra button,.barra2 button{padding:10px 2px;border:none;border-radius:8px;font-weight:900;font-size:11px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:100;padding:15px;overflow:auto}
-.input{width:100%;padding:12px;border-radius:10px;border:1px solid #555;background:#222;color:#fff;margin:6px 0}
-#modalP{display:none;position:fixed;inset:0;z-index:200;background:#000}
-#modalKwai{display:none;position:fixed;inset:0;z-index:210;background:#000}
-#kwaiBox{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
-.kwaiItem{height:100vh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
-.kwaiItem video{width:100%;height:100%;object-fit:contain;background:#000}
-.efeitosKwai{display:flex;gap:8px;overflow-x:auto;padding:10px 0;scrollbar-width:none;margin-top:8px}
-.efeitosKwai::-webkit-scrollbar{display:none}
-.efeitoKwai{min-width:62px;height:72px;background:#222;border:2px solid transparent;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:11px;text-align:center;cursor:pointer;flex-shrink:0}
-.efeitoKwai.ativo{border-color:#ff0050;background:#3a0020}
-.efeitoKwai span{font-size:22px;margin-bottom:2px}
-#previewWrap{position:relative;width:100%;height:65vh;background:#000;border-radius:16px;overflow:hidden}
-#previewGravar{width:100%;height:100%;object-fit:cover;background:#000}
-#canvasEmoji{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
-#timerRec{position:absolute;top:12px;left:12px;background:#ff0050;color:#fff;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:900;display:none}
-</style>
-</head>
-<body>
-<div class="cabecalho"><img src="icone-myknay.png" onerror="this.style.display='none'"> MY KNAY 🔥</div>
-<div id="telaGeneros"></div><div id="telaFilmes" style="display:none"></div>
-<div class="barra2">
-<button onclick="backup()" style="background:#333;color:#fff">💾 BACKUP</button>
-<button onclick="document.getElementById('inputRestore').click()" style="background:#333;color:#fff">♻️ RESTAURAR</button>
-<button onclick="compartilhar()" style="background:#00c853;color:#fff">📤 CONVIDAR</button>
-<button onclick="renomearApp()" style="background:#6c5ce7;color:#fff">✏️ NOME</button>
-<button id="botaoReset" style="background:#fff;color:#000">🧹 RESET</button>
+body{font-family:Arial;background:#000;color:#fff;padding:0;margin:0;padding-top:60px;padding-bottom:130px}
+.topo{position:fixed;top:0;left:0;right:0;background:#ff0055;color:#fff;padding:12px;text-align:center;z-index:9999;font-weight:bold;font-size:18px}
+.barra-chave{position:fixed;top:45px;left:0;right:0;background:#1F4E79;color:#fff;padding:8px 12px;z-index:9998;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.botoes-topo button{padding:5px 8px;border:none;border-radius:6px;font-weight:bold;font-size:11px}
+.box{background:#fff;color:#000;border-radius:12px;padding:12px;max-width:1100px;margin:10px auto}
+label{font-size:11px;font-weight:bold;color:#1F4E79;display:block;margin-top:6px}
+input,select{width:100%;padding:11px;border:1px solid #ccc;border-radius:8px;font-size:15px;margin-top:3px}
+button{padding:13px;border:0;border-radius:8px;color:#fff;font-weight:bold;margin:5px 0;cursor:pointer}
+.v{background:#27ae60}.a{background:#1F4E79}.r{background:#c0392b}.o{background:#e67e22}.y{background:#f1c40f;color:#000}.p{background:#8e44ad}
+table{width:100%;border-collapse:collapse;font-size:11px;margin-top:10px;background:#fff;color:#000}
+th{background:#1F4E79;color:#fff;padding:6px} td{border:1px solid #ccc;padding:5px;text-align:center}
+.T{background:#C6EFCE}.F{background:#FFC7CE;font-weight:bold}.FM{background:#d6eaf8;font-weight:bold}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.card{border:2px solid #1F4E79;border-radius:10px;padding:10px;background:#f8faff;margin:8px 0;color:#000}
+.ok{background:#d4edda;padding:8px;border-radius:6px;color:#155724;font-size:12px;margin:6px 0;display:none}
+.item-lista{background:#fff;border:1px solid #ccc;border-radius:8px;padding:8px;margin:5px 0;display:flex;justify-content:space-between;align-items:center;color:#000}
+.btn-excluir{background:#ff4444;color:#fff;border:none;border-radius:6px;padding:6px 10px}
+
+/* BARRAS DE BAIXO IGUAL PRINT */
+.barra-baixo{position:fixed;bottom:0;left:0;right:0;background:#111;padding:6px;z-index:9999;display:flex;flex-direction:column;gap:6px}
+.linha{display:flex;gap:6px;overflow-x:auto}
+.linha button{white-space:nowrap;flex:1;padding:10px 8px;font-size:11px;border-radius:8px;font-weight:bold}
+.btn-backup{background:#2d2d2d;color:#fff}.btn-rest{background:#2d2d2d;color:#fff}.btn-conv{background:#00c851;color:#fff}.btn-nome{background:#7b5cff;color:#fff}.btn-reset{background:#fff;color:#000}
+.btn-varios{background:#00a8ff;color:#fff}.btn-link{background:#ff9f00;color:#fff}.btn-gravar{background:#ff2e8b;color:#fff}.btn-knay{background:#ff3b3b;color:#fff}
+
+.pill{display:inline-flex;background:#222;color:#fff;padding:10px 14px;border-radius:20px;align-items:center;gap:10px;margin:10px}
+.pill .abrir{background:#ffcc00;color:#000;border:none;padding:8px 14px;border-radius:12px;font-weight:bold}
+.genero{background:#ffcc00;color:#000;border:none;padding:10px 18px;border-radius:12px;font-weight:bold;margin:10px auto;display:block}
+</style></head><body>
+
+<div class="topo">🅰️ MY KNAY 🔥 (223 vídeos)</div>
+<div class="barra-chave">
+  <span>🔑 ESCALA-5X1-PR-2026 <small id="statusChave"></small></span>
+  <div class="botoes-topo">
+    <button style="background:#00ccff" onclick="fazerBackup()">💾</button>
+    <button style="background:#00ff88" onclick="document.getElementById('inputRest').click()">♻️</button>
+    <button style="background:#ffcc00" onclick="buscarTubeMate()">🔍</button>
+  </div>
 </div>
-<div class="barra">
-<button id="btnVarios" style="background:#00aaff;color:#fff">📂 VÁRIOS</button>
-<button id="btnLink" style="background:#ff9800;color:#fff">🔗 LINK</button>
-<button id="btnGravar" style="background:#e91e63;color:#fff">📹 GRAVAR</button>
-<button id="btnKnay" style="background:#ff0050;color:#fff">▶️ KNAY</button>
+<input type="file" id="inputRest" accept=".json" style="display:none" onchange="processarRestaurar(event)">
+
+<div style="text-align:center;padding-top:10px">
+  <div class="pill">MY KNAY (223) <button class="abrir" onclick="buscarTubeMate()">ABRIR</button> <button style="background:#333;color:#fff;border:none;border-radius:10px;padding:8px 12px" onclick="document.getElementById('areaBusca').scrollIntoView()">X</button></div>
+  <button class="genero">+ GÊNERO</button>
 </div>
-<input type="file" id="arquivoMultiplo" accept="video/*" multiple style="display:none">
-<input type="file" id="inputRestore" accept=".json" style="display:none">
-<div id="modalLink" class="modal"><h2>🔗 Adicionar Link</h2><input id="linkUrl" class="input" placeholder="https://...mp4"><input id="linkNome" class="input" placeholder="Nome"><button onclick="addLink()" class="botao" style="background:#ff9800;width:100%">Salvar</button><button onclick="document.getElementById('modalLink').style.display='none'" class="botao" style="background:#333;color:#fff;width:100%;margin-top:6px">Fechar</button></div>
-<div id="modalGravar" class="modal">
-<h2 style="display:flex;justify-content:space-between;align-items:center">📹 Gravar com Efeitos <span style="font-size:12px;color:#aaa">igual Kwai</span></h2>
-<div id="previewWrap">
-<video id="previewGravar" autoplay muted playsinline></video>
-<canvas id="canvasEmoji"></canvas>
-<div id="timerRec">00:00</div>
-<button onclick="trocarCamera()" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);color:#fff;border:none;width:48px;height:48px;border-radius:50%;font-size:22px">🔄</button>
-<div id="qualCamera" style="position:absolute;bottom:12px;left:12px;background:rgba(0,0,0,.6);color:#fff;padding:5px 10px;border-radius:10px;font-size:12px">Frontal</div>
+
+<div class="box">
+<div id="msg" class="ok"></div>
+
+<div id="areaBusca" class="card" style="background:#ffe6e6;border-color:#ff0000">
+<label style="color:#ff0000">🎬 BUSCAR NO TUBEMATE + BAIXAR</label>
+<div class="row">
+<button style="background:#ff0000" onclick="buscarTubeMate()">🔍 BUSCAR NO TUBE MATE</button>
+<button class="a" onclick="abrirNoTubeMate()">📲 BAIXAR VÍDEO/FILME</button>
 </div>
-<div class="efeitosKwai" id="listaEfeitosKwai"></div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-<button id="btnStartRec" onclick="startRec()" style="background:#ff0050" class="botao">🔴 INICIAR</button>
-<button id="btnStopRec" onclick="stopRec()" disabled style="background:#333;color:#888" class="botao">⏹️ PARAR</button>
+<input id="linkVideo" placeholder="Cole link do YouTube aqui e clica em BAIXAR">
+<div class="row" style="margin-top:6px">
+<input id="termoBusca" placeholder="Ex: filme dublado 2024">
+<button class="y" onclick="buscarFilme()">🎬 BUSCAR FILME</button>
 </div>
-<button onclick="fecharGravar()" class="botao" style="background:#333;color:#fff;width:100%;margin-top:8px">Fechar</button>
 </div>
-<div id="modalP"><button onclick="fecharPlayer()" style="position:fixed;top:10px;right:10px;z-index:101;background:#ffcc00;border:none;padding:10px;border-radius:8px;font-weight:900">X</button><video id="v" controls autoplay playsinline style="width:100%;height:100%;background:#000"></video><div id="nomePlay" style="position:fixed;bottom:20px;left:10px;background:rgba(0,0,0,.6);padding:6px 10px;border-radius:10px"></div></div>
-<div id="modalKwai"><button onclick="fecharKwai()" style="position:fixed;top:10px;left:10px;z-index:30;background:#fff;border:none;padding:10px 14px;border-radius:10px;font-weight:900">X FECHAR</button><div id="kwaiBox"></div></div>
+
+<div class="card" style="background:#fff3cd;border-color:#e67e22">
+<label style="color:#e67e22">DEFINIR INICIO ESCALA (TRAVA PRA NÃO SUMIR)</label>
+<div class="row"><div><label>Data inicio</label><input type="date" id="dataInicio" value="2026-10-01"></div><div><label>Quem folga?</label><select id="folgaInicial"><option value="0">Natal</option><option value="1">Kaue</option><option value="2">Mario</option><option value="3">Jose Marcos</option><option value="4">Folguista</option><option value="5">Todos</option></select></div></div>
+<button class="y" onclick="definirEscala()">📌 DEFINIR E TRAVAR ESCALA</button>
+</div>
+
+<div class="card">
+<label>NOME</label><input id="nome" placeholder="Ex: Jose Marcos">
+<label>HORARIO</label><div class="row"><input type="time" id="hin" value="10:00"><input type="time" id="hout" value="18:20"></div>
+<label>TIPO</label><select id="tipo"><option value="5x1">5x1 AUTOMATICO</option><option value="fixa">FOLGA FIXA</option><option value="encarregado">ENCARREGADO</option><option value="folguista">FOLGUISTA</option><option value="personal">PERSONALIZADA</option></select>
+<div class="row"><div><label>INICIO FOLGA</label><select id="inicioFolga"><option value="0">06,12,18,24,30</option><option value="1">05,11,17,23,29</option><option value="2">04,10,16,22,28</option><option value="3">03,09,15,21,27</option><option value="4">02,08,14,20,26</option><option value="5">01,07,13,19,25,31</option></select></div><div><label>DIAS FOLGA MANUAL</label><input id="diasFolga" placeholder="5,12,19,26"></div></div>
+<button class="v" onclick="add()">+ ADICIONAR</button>
+</div>
+
+<div class="row"><div><label>MES</label><select id="mes"><option value="9">SETEMBRO</option><option value="10" selected>OUTUBRO</option><option value="11">NOVEMBRO</option></select></div><div><label>ANO</label><select id="ano"><option>2026</option></select></div></div>
+<button class="a" onclick="gerar()">GERAR ESCALA</button>
+<div id="lista" style="background:#eee;padding:8px;border-radius:8px;margin:6px 0;font-size:12px;color:#000"></div>
+<div style="overflow:auto"><table id="tab"></table></div>
+</div>
+
+<!-- BARRAS IGUAIS DO PRINT -->
+<div class="barra-baixo">
+  <div class="linha">
+    <button class="btn-backup" onclick="fazerBackup()">💾 BACKUP</button>
+    <button class="btn-rest" onclick="document.getElementById('inputRest').click()">♻️ RESTAURAR</button>
+    <button class="btn-conv" onclick="convidar()">💌 CONVIDAR</button>
+    <button class="btn-nome" onclick="editarNomes()">✏️ NOME</button>
+    <button class="btn-reset" onclick="limparTudo()">🧹 RESET</button>
+  </div>
+  <div class="linha">
+    <button class="btn-varios" onclick="exemplo()">📁 VÁRIOS</button>
+    <button class="btn-link" onclick="compartilhar()">🔗 LINK</button>
+    <button class="btn-gravar" onclick="salvarDefinitivo()">📼 GRAVAR</button>
+    <button class="btn-knay" onclick="buscarTubeMate()">▶️ KNAY</button>
+  </div>
+</div>
+
 <script>
-let chaveFixa='plugtv_MY-KNAY_FINAL_UNICO';let dbFixa='PlugTV_MY-KNAY_FINAL_UNICO';let pastaAtual=0;let db=null;let dados;let recorder=null;let chunks=[];let streamRec=null;let cameraAtual='user';
-let efeitoAtual='original'; let emojiAtivo=''; let emojiInterval=null; let tempoRec=null; let segRec=0;
-const efeitosKwai=[
- {id:'original', nome:'Original', icon:'✨', filter:'none', emoji:''},
- {id:'beleza', nome:'Beleza', icon:'💖', filter:'brightness(1.18) contrast(1.08) saturate(1.12) blur(0.4px)', emoji:''},
- {id:'suave', nome:'Suave', icon:'🌸', filter:'brightness(1.1) contrast(0.95) saturate(0.9) blur(0.6px)', emoji:''},
- {id:'vintage', nome:'Vintage', icon:'📼', filter:'sepia(0.5) contrast(1.2) brightness(0.95) saturate(1.2)', emoji:''},
- {id:'cinema', nome:'Cinema', icon:'🎬', filter:'contrast(1.35) brightness(1.05) saturate(0.2)', emoji:''},
- {id:'quente', nome:'Quente', icon:'🔥', filter:'sepia(0.25) saturate(1.6) hue-rotate(-15deg) brightness(1.05)', emoji:''},
- {id:'frio', nome:'Frio', icon:'❄️', filter:'hue-rotate(180deg) saturate(0.8) brightness(1.1) contrast(1.1)', emoji:''},
- {id:'neon', nome:'Neon', icon:'🌈', filter:'hue-rotate(90deg) saturate(2) contrast(1.3)', emoji:''},
- {id:'espelho', nome:'Espelho', icon:'🪞', filter:'none', espelho:true},
- {id:'dog', nome:'Dog', icon:'🐶', filter:'brightness(1.1) saturate(1.2)', emoji:'🐶'},
- {id:'coracao', nome:'Love', icon:'😍', filter:'brightness(1.15) saturate(1.3)', emoji:'😍'},
- {id:'oculos', nome:'Óculos', icon:'😎', filter:'contrast(1.1) brightness(1.1)', emoji:'😎'},
- {id:'choro', nome:'Choro', icon:'😭', filter:'saturate(1.3)', emoji:'😭'},
-];
-function montarEfeitosKwai(){
- let div=document.getElementById('listaEfeitosKwai'); if(!div) return;
- div.innerHTML=''; efeitosKwai.forEach(e=>{ div.innerHTML+=`<div class="efeitoKwai ${e.id===efeitoAtual?'ativo':''}" onclick="aplicarEfeitoKwai('${e.id}')"><span>${e.icon}</span>${e.nome}</div>`; });
-}
-function aplicarEfeitoKwai(id){
- efeitoAtual=id; let e=efeitosKwai.find(x=>x.id===id); let vid=document.getElementById('previewGravar');
- vid.style.filter=e.filter; if(e.espelho){ vid.style.transform='scaleX(-1)'; } else { vid.style.transform='scaleX(1)'; }
- montarEfeitosKwai(); if(e.emoji){ startEmoji(e.emoji); } else { stopEmoji(); }
-}
-function startEmoji(emo){ stopEmoji(); emojiAtivo=emo; let canvas=document.getElementById('canvasEmoji'); let ctx=canvas.getContext('2d'); canvas.width=360; canvas.height=640;
- emojiInterval=setInterval(()=>{ ctx.clearRect(0,0,canvas.width,canvas.height); ctx.font='70px Arial'; ctx.fillText(emo, 20, 100); },100);
-}
-function stopEmoji(){ if(emojiInterval){clearInterval(emojiInterval);emojiInterval=null;} let canvas=document.getElementById('canvasEmoji'); if(canvas){ canvas.getContext('2d').clearRect(0,0,canvas.width,canvas.height); } emojiAtivo=''; }
-try{let atual=localStorage.getItem(chaveFixa);if(atual){dados=JSON.parse(atual);}else{let antiga=localStorage.getItem('plugtv_MEU-KWAI_FINAL_UNICO')||localStorage.getItem('plugtv_v7');if(antiga){dados=JSON.parse(antiga);localStorage.setItem(chaveFixa,antiga);}else{dados=[{nome:"MY KNAY",filmes:[]}];}}}catch(e){dados=[{nome:"MY KNAY",filmes:[]}];}
-function salvar(){localStorage.setItem(chaveFixa,JSON.stringify(dados));let total=dados.reduce((s,g)=>s+g.filmes.length,0);document.querySelector('.cabecalho').innerHTML='<img src="icone-myknay.png" onerror="this.style.display=\'none\'" style="width:28px;height:28px;border-radius:6px;background:#fff;padding:2px"> MY KNAY 🔥 ('+total+' vídeos)';}
-let req=indexedDB.open(dbFixa,1);req.onupgradeneeded=e=>{if(!e.target.result.objectStoreNames.contains('videos'))e.target.result.createObjectStore('videos',{keyPath:'id'});};req.onsuccess=e=>{db=e.target.result;renderizar();};req.onerror=()=>renderizar();
-function embaralhar(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function renderizar(){let h='';dados.forEach((g,i)=>{h+=`<div class="massa"><div><b>${g.nome}</b> <small>(${g.filmes.length})</small></div><div><button class="botao botao-abrir" onclick="abrir(${i})">ABRIR</button> <button onclick="removerGenero(${i})" style="background:#333;color:#fff" class="botao">X</button></div></div>`;});document.getElementById('telaGeneros').innerHTML='<div style="padding:12px">'+h+'</div><div style="text-align:center"><button onclick="criarGeneroPrompt()" style="background:#ffcc00;color:#000" class="botao">+ GÊNERO</button></div>';document.getElementById('telaGeneros').style.display='block';document.getElementById('telaFilmes').style.display='none';salvar();}
-window.abrir=function(i){pastaAtual=i;let g=dados[i];let h=`<div class="topo"><button onclick="renderizar()" style="background:#333;color:#fff" class="botao">⬅ Voltar</button><b>${g.nome}</b><span>${g.filmes.length}</span></div>`;g.filmes.forEach((f,idx)=>{h+=`<div class="item"><b onclick="editarNome(${i},${idx})" style="flex:1;cursor:pointer">🎬 ${f.nome} ${f.efeito?'('+f.efeito+')':''} ✏️</b><div style="display:flex;gap:4px"><button onclick="play(${i},${idx})" style="background:#ffcc00" class="botao">▶️</button><button onclick="excluirVideo(${i},${idx})" style="background:#333;color:#fff" class="botao">🗑️</button></div></div>`;});if(!g.filmes.length)h+=`<p style="text-align:center;color:#666;margin-top:30px">Vazio - clique em VÁRIOS, LINK ou GRAVAR com efeitos</p>`;document.getElementById('telaFilmes').innerHTML=h;document.getElementById('telaFilmes').style.display='block';document.getElementById('telaGeneros').style.display='none';}
-window.play=function(gi,fi){let f=dados[gi].filmes[fi];document.getElementById('modalP').style.display='block';document.getElementById('nomePlay').innerText=f.nome+(f.efeito?' - Efeito: '+f.efeito:'');if(f.tipo=='link'){let v=document.getElementById('v');v.src=f.url;v.play();return;}let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(f.id);r.onsuccess=()=>{if(r.result){let v=document.getElementById('v');v.src=URL.createObjectURL(r.result.blob);v.play();}};}
-window.fecharPlayer=function(){document.getElementById('modalP').style.display='none';let v=document.getElementById('v');v.pause();v.src='';}
-window.excluirVideo=function(gi,fi){if(!confirm('Excluir?'))return;let f=dados[gi].filmes[fi];if(f.id&&f.tipo!='link'){try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}}dados[gi].filmes.splice(fi,1);salvar();abrir(gi);}
-window.editarNome=function(gi,fi){let n=prompt('Novo nome:',dados[gi].filmes[fi].nome);if(n){dados[gi].filmes[fi].nome=n;salvar();abrir(gi);}}
-document.getElementById('btnVarios').onclick=()=>document.getElementById('arquivoMultiplo').click();
-document.getElementById('arquivoMultiplo').onchange=async e=>{let files=[...e.target.files];for(let file of files){let id=Date.now()+'_'+Math.random();await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob:file});tx.oncomplete=res;});dados[pastaAtual].filmes.push({id,nome:file.name,tipo:'file'});}salvar();abrir(pastaAtual);e.target.value='';}
-document.getElementById('btnLink').onclick=()=>document.getElementById('modalLink').style.display='block';
-window.addLink=function(){let url=document.getElementById('linkUrl').value.trim();let nome=document.getElementById('linkNome').value.trim()||'Link';if(!url)return;dados[pastaAtual].filmes.push({id:'link_'+Date.now(),nome,tipo:'link',url});salvar();document.getElementById('modalLink').style.display='none';document.getElementById('linkUrl').value='';document.getElementById('linkNome').value='';abrir(pastaAtual);}
-async function iniciarCamera(){if(streamRec)streamRec.getTracks().forEach(t=>t.stop());try{streamRec=await navigator.mediaDevices.getUserMedia({video:{facingMode:cameraAtual},audio:true});document.getElementById('previewGravar').srcObject=streamRec;}catch(err){alert('Erro câmera: '+err.message);}}
-window.trocarCamera=function(){cameraAtual=cameraAtual=='user'?'environment':'user';iniciarCamera().then(()=>{document.getElementById('qualCamera').innerText=cameraAtual=='user'?'Frontal':'Traseira'; aplicarEfeitoKwai(efeitoAtual);});}
-document.getElementById('btnGravar').onclick=async()=>{document.getElementById('modalGravar').style.display='block';cameraAtual='user';efeitoAtual='original';montarEfeitosKwai();await iniciarCamera();document.getElementById('qualCamera').innerText='Frontal';aplicarEfeitoKwai('original');};
-window.fecharGravar=function(){document.getElementById('modalGravar').style.display='none';if(streamRec)streamRec.getTracks().forEach(t=>t.stop());stopEmoji();if(tempoRec){clearInterval(tempoRec);tempoRec=null;}document.getElementById('timerRec').style.display='none';document.getElementById('btnStartRec').disabled=false;document.getElementById('btnStopRec').disabled=true;document.getElementById('btnStopRec').style.background='#333';};
-window.startRec=function(){
- chunks=[]; let eAtual=efeitosKwai.find(x=>x.id===efeitoAtual);
- recorder=new MediaRecorder(streamRec,{mimeType:'video/webm'});
- recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
- recorder.onstop=async()=>{
-   let blob=new Blob(chunks,{type:'video/webm'}); let id=Date.now()+'_'+Math.random();
-   await new Promise(res=>{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').put({id,blob});tx.oncomplete=res;});
-   let nome=prompt('Nome do vídeo:','Gravado '+new Date().toLocaleTimeString())||'Gravado';
-   dados[pastaAtual].filmes.push({id,nome,tipo:'file',efeito:eAtual.nome}); salvar();abrir(pastaAtual);fecharGravar();
- };
- recorder.start();
- document.getElementById('btnStartRec').disabled=true; document.getElementById('btnStopRec').disabled=false;
- document.getElementById('btnStopRec').style.background='#ff0050'; document.getElementById('btnStopRec').style.color='#fff';
- segRec=0; document.getElementById('timerRec').style.display='block';
- tempoRec=setInterval(()=>{segRec++;let m=String(Math.floor(segRec/60)).padStart(2,'0');let s=String(segRec%60).padStart(2,'0');document.getElementById('timerRec').innerText='🔴 '+m+':'+s+' - '+eAtual.nome;},1000);
-}
-window.stopRec=function(){if(recorder)recorder.stop();document.getElementById('btnStartRec').disabled=false;document.getElementById('btnStopRec').disabled=true;if(tempoRec){clearInterval(tempoRec);tempoRec=null;}}
-function criarGeneroPrompt(){let n=prompt('Nome da pasta/gênero:');if(n){dados.push({nome:n,filmes:[]});salvar();renderizar();}}
-window.removerGenero=function(i){if(confirm('Apagar pasta '+dados[i].nome+' e todos vídeos?')){dados[i].filmes.forEach(f=>{if(f.id&&f.tipo!='link'){try{let tx=db.transaction('videos','readwrite');tx.objectStore('videos').delete(f.id);}catch(e){}}});dados.splice(i,1);salvar();renderizar();}}
-document.getElementById('botaoReset').onclick=()=>{if(confirm('RESETAR TUDO MESMO? Faça backup antes!')){if(confirm('Tem certeza absoluta?')){localStorage.removeItem(chaveFixa);indexedDB.deleteDatabase(dbFixa);location.reload();}}}
-window.backup=function(){let blob=new Blob([JSON.stringify(dados)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='backup_myknay_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
-document.getElementById('inputRestore').onchange=e=>{let file=e.target.files[0];if(!file)return;let r=new FileReader();r.onload=ev=>{try{let imp=JSON.parse(ev.target.result);if(Array.isArray(imp)&&imp.length>0&&confirm('Restaurar '+imp.length+' pastas com '+imp.reduce((s,g)=>s+g.filmes.length,0)+' vídeos?')){dados=imp;salvar();renderizar();alert('Restaurado!');}}catch(err){alert('Erro: '+err.message);}};r.readAsText(file);e.target.value='';};
-window.compartilhar=function(){let url=location.href;if(navigator.share){navigator.share({title:'MY KNAY',text:'Meu app My Knay com efeitos Kwai 🔥',url}).catch(()=>{});}else{prompt('Copia e manda pros amigos:',url);}}
-window.renomearApp=function(){let n=prompt('Novo nome do app:',document.querySelector('.cabecalho').innerText.replace(/🔥|\(.*\)/g,'').trim());if(n){localStorage.setItem('myknay_nome',n);salvar();}}
-let nomeSalvo=localStorage.getItem('myknay_nome'); if(nomeSalvo){setTimeout(()=>{let el=document.querySelector('.cabecalho');if(el){el.innerHTML='<img src="icone-myknay.png" style="width:28px;height:28px;border-radius:6px;background:#fff;padding:2px"> '+nomeSalvo+' 🔥';}},500);}
-window.fecharKwai=function(){document.getElementById('modalKwai').style.display='none';document.getElementById('kwaiBox').innerHTML='';}
-document.getElementById('btnKnay').onclick=()=>{
-let todos=[];dados.forEach((g,gi)=>{g.filmes.forEach((f,fi)=>{todos.push({obj:f,gi,fi});});});
-if(!todos.length)return alert('Adicione vídeos primeiro em VÁRIOS, LINK ou GRAVAR');
-todos=embaralhar(todos);
-let h='';todos.forEach(t=>{let isLink=t.obj.tipo=='link';h+=`<div class="kwaiItem"><video ${isLink?'src="'+t.obj.url+'"':''} playsinline loop preload="metadata" data-id="${t.obj.id}" data-link="${isLink?'1':'0'}" data-efeito="${t.obj.efeito||''}"></video><div style="position:absolute;bottom:100px;left:12px;right:70px;background:rgba(0,0,0,.6);padding:10px 12px;border-radius:12px"><b>🎬 ${t.obj.nome}</b><br><small>${t.obj.efeito?'✨ Efeito: '+t.obj.efeito:''}</small></div><div style="position:absolute;right:12px;bottom:150px;display:flex;flex-direction:column;gap:16px"><button style="background:rgba(255,255,255,.2);border:none;width:48px;height:48px;border-radius:50%;font-size:24px;color:#fff">❤️</button><button style="background:rgba(255,255,255,.2);border:none;width:48px;height:48px;border-radius:50%;font-size:22px;color:#fff">💬</button><button style="background:rgba(255,255,255,.2);border:none;width:48px;height:48px;border-radius:50%;font-size:22px;color:#fff">↗️</button></div></div>`;});
-document.getElementById('kwaiBox').innerHTML=h;document.getElementById('modalKwai').style.display='block';
-let vids=document.querySelectorAll('#kwaiBox video');
-vids.forEach((v,idx)=>{if(v.dataset.link=='0'){let tx=db.transaction('videos','readonly');let r=tx.objectStore('videos').get(v.dataset.id);r.onsuccess=()=>{if(r.result){v.src=URL.createObjectURL(r.result.blob);if(idx===0)v.play().catch(()=>{});}};}else{if(idx===0)v.play().catch(()=>{});}});
-vids.forEach(v=>{v.addEventListener('play',()=>{vids.forEach(o=>{if(o!==v)o.pause();});});v.addEventListener('click',()=>{if(v.paused)v.play();else v.pause();});});
-let observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){vids.forEach(x=>{if(x!==entry.target)x.pause();});entry.target.play().catch(()=>{});}else{entry.target.pause();}});},{threshold:0.6,root:document.getElementById('kwaiBox')});
-vids.forEach(v=>observer.observe(v));
-};
-</script>
-<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}</script>
-</body>
-</html>
+var funcs=[];var escalaTravada=null;
+const KEY_FUNCS='funcsEscala_v2'; const KEY_TRAVA='escalaTravada_v2'; const KEY_BKP='funcsEscala_bkp_v2';
+function showMsg(txt){var m=document.getElementById('msg');m.style.display='block';m.innerHTML=txt;setTimeout(()=>{m.style.display='none'},4000);}
+
+function buscarTubeMate(){let termo=document.getElementById('termoBusca').value || prompt('O que buscar no TubeMate/YouTube?'); if(!termo)return; document.getElementById('termoBusca').value=termo; window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(termo)}`,'_blank');}
+function buscarFilme(){let termo=document.getElementById('termoBusca').value || 'filme'; window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(termo+' filme completo dublado')}`,'_blank');}
+function abrirNoTubeMate(){let link=document.getElementById('linkVideo').value.trim() || prompt('Cole o link do YouTube:'); if(!link)return; document.getElementById('linkVideo').value=link; window.location.href=`intent:${link}#Intent;package=devian.tubemate.home;end`; setTimeout(()=>window.open(link,'_blank'),1500);}
+
+function definirEscala(){var data=document.getElementById('dataInicio').value;var quem=document.getElementById('folgaInicial').value;escalaTravada={data:data,[STRIPPED] Travada em '+data;showMsg('✅ Travada!');salvarDefinitivo();gerar();}
+function salvarDefinitivo(){localStorage.setItem(KEY_FUNCS,JSON.stringify(funcs));localStorage.setItem(KEY_BKP,JSON.stringify(funcs));localStorage.setItem('funcsEscala',JSON.stringify(funcs));if(escalaTravada)localStorage.setItem(KEY_TRAVA,JSON.stringify(escalaTravada));showMsg('✅ GRAVADO! Não some mais.');}
+function editarNomes(){let n=prompt('Renomear lista? Formato: Natal,Kaue,Mario'); if(!n)return; let arr=n.split(','); for(let i=0;i<arr.length && i<funcs.length;i++) funcs[i].nome=arr[i].trim(); lista();gerar();salvarDefinitivo();}
+function add(){var nome=document.getElementById('nome').value.trim();if(!nome){alert('Digite nome');return}var hor=document.getElementById('hin').value+'-'+document.getElementById('hout').value;var tipo=document.getElementById('tipo').value;var inicio=parseInt(document.getElementById('inicioFolga').value)||0;var diasFolga=document.getElementById('diasFolga').value;funcs.push({nome,hor,tipo,inicio,diasFolga});document.getElementById('nome').value='';lista();gerar();salvarDefinitivo();}
+function lista(){var d=document.getElementById('lista');if(funcs.length==0){d.innerHTML='Nenhum funcionario';return}var t='';for(var i=0;i<funcs.length;i++){t+=`<div class="item-lista"><span>${i+1}. <b>${funcs[i].nome}</b> ${funcs[i].hor}</span><button class="btn-excluir" onclick="rem(${i})">🗑️</button></div>`}d.innerHTML=t;if(escalaTravada)document.getElementById('statusChave').innerText='✅ '+escalaTravada.data;}
+function rem(i){if(confirm('Remover 🗑️?')){funcs.splice(i,1);lista();gerar();salvarDefinitivo();}}
+function limparTudo(){if(confirm('RESETAR TUDO?')){funcs=[];escalaTravada=null;localStorage.clear();lista();gerar();document.getElementById('statusChave').innerText='';}}
+function exemplo(){funcs=[{nome:'Natal',hor:'15:20-22:40',tipo:'5x1',inicio:0},{nome:'Kaue',hor:'07:00-15:20',tipo:'5x1',inicio:1},{nome:'Mario',hor:'22:40-07:00',tipo:'5x1',inicio:2},{nome:'Jose Marcos',hor:'10:00-18:20',tipo:'5x1',inicio:3},{nome:'FOLGUISTA',hor:'22:40-07:00',tipo:'folguista',inicio:2},{nome:'Celio',hor:'11:00-19:40',tipo:'encarregado',inicio:0}];if(!localStorage.getItem(KEY_TRAVA)){escalaTravada={data:document.getElementById('dataInicio').value,[STRIPPED]
+function gerar(){var mes=parseInt(document.getElementById('mes').value);var ano=parseInt(document.getElementById('ano').value);var dias=new Date(ano,mes,0).getDate();var tab=document.getElementById('tab');if(funcs.length==0){tab.innerHTML='<tr><td>Adicione</td></tr>';return}var dsem=['Dom','Seg','Ter','Qua','Qui','Sex','Sab'];var h='<tr><th>Nome</th><th>Hor</th><th>Tipo</th>';for(var d=1;d<=dias;d++){var dt=new Date(ano,mes-1,d);h+='<th>'+d+'<br>'+dsem[dt.getDay()]+'</th>';}h+='</tr>';for(var i=0;i<funcs.length;i++){var f=funcs[i];var ini=f.inicio||0;h+='<tr><td><b>'+f.nome+'</b></td><td>'+f.hor+'</td><td>'+f.tipo+'</td>';for(var d=1;d<=dias;d++){if(f.tipo=='encarregado'){var wd=new Date(ano,mes-1,d).getDay();h+=(wd==0||wd==6)?"<td class='F'>F</td>":"<td class='T'>T</td>";}else if(f.tipo=='personal'){var ld=f.diasFolga.split(',').map(s=>parseInt(s.trim()));h+=ld.includes(d)?"<td class='F'>F</td>":"<td class='T'>T</td>";}else if(f.tipo=='folguista'){h+=(d+ini)%6==0?"<td class='FM'>T</td>":"<td style=background:#eee>-</td>";}else{h+=(d+ini)%6==0?"<td class='F'>F</td>":"<td class='T'>T</td>";}}h+='</tr>';}tab.innerHTML=h;}
+function fazerBackup(){var dados={escalaTravada,funcionarios:funcs};var blob=new Blob([JSON.stringify(dados,null,2)],{type:'application/json'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='backup_escala_'+new Date().toISOString().slice(0,10)+'.json';a.click();}
+function processarRestaurar(e){var arq=e.target.files[0];if(!arq)return;var r=new FileReader();r.onload=function(ev){try{var d=JSON.parse(ev.target.result);funcs=d.funcionarios||[];escalaTravada=d.escalaTravada;if(escalaTravada)localStorage.setItem(KEY_TRAVA,JSON.stringify(escalaTravada));salvarDefinitivo();lista();gerar();showMsg('♻️ Restaurado!');}catch{alert('Inválido');}};r.readAsText(arq);}
+function compartilhar(){var txt=`📅 Escala 5x1 ${funcs.length} pessoas\n`+funcs.map(f=>`👤 ${f.nome}`).join('\n');if(navigator.share)navigator.share({title:'Escala',text:txt});else{navigator.clipboard.writeText(txt);alert('Link copiado');}}
+function convidar(){navigator.clipboard.writeText(location.href).then(()=>alert('👥 Link copiado! '+location.href));}
+window.onload=function(){var s=localStorage.getItem(KEY_FUNCS)||localStorage.getItem('funcsEscala');var t=localStorage.getItem(KEY_TRAVA)||localStorage.getItem('escalaTravada');if(s)funcs=JSON.parse(s);if(t){escalaTravada=JSON.parse(t);document.getElementById('dataInicio').value=escalaTravada.data;document.getElementById('statusChave').innerText='✅ '+escalaTravada.data;}lista();if(funcs.length>0)gerar();}
+</script></body></html>
