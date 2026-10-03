@@ -1,48 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>MY KNAY 223</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#000;color:#fff;font-family:Arial;overflow:hidden}
+.topo{position:fixed;top:0;left:0;right:0;background:#ff0055;padding:12px;text-align:center;z-index:100;font-weight:bold}
+.chave{position:fixed;top:44px;left:0;right:0;background:rgba(31,78,121,.9);padding:6px 12px;z-index:100;display:flex;justify-content:space-between;font-size:12px}
+.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory}
+.item{height:100vh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center;background:#000}
+.item video{width:100%;height:100%;object-fit:contain;background:#000}
+.overlay{position:absolute;bottom:150px;left:10px}
+.lateral{position:absolute;right:10px;bottom:160px;display:flex;flex-direction:column;gap:12px}
+.lateral button{width:50px;height:50px;border-radius:50%;border:0;font-size:20px;background:rgba(255,255,255,.2);color:#fff}
+.bbaixo{position:fixed;bottom:0;left:0;right:0;background:#111;padding:6px;z-index:101;display:flex;flex-direction:column;gap:6px}
+.linha{display:flex;gap:6px}.linha button{flex:1;padding:11px 4px;font-size:10px;border-radius:10px;border:0;font-weight:bold}
+.boxAdd{position:fixed;top:80px;left:10px;right:10px;background:#fff;color:#000;border-radius:12px;padding:12px;z-index:102;display:none;max-height:75vh;overflow:auto}
+input{width:100%;padding:10px;border:1px solid #ccc;border-radius:8px;margin-top:6px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}
+#cam{width:100%;border-radius:12px;display:none}
+</style>
+</head>
+<body>
+<div class="topo">A MY KNAY 🔥 (<span id="cont">0</span>) - DESLIZE PRA CIMA</div>
+<div class="chave"><span>🔑 <b>KNAY-2026-FIXA</b> ✅ Travada</span><span>🔍 Busca OK</span></div>
+<div class="feed" id="feed"></div>
+<div class="boxAdd" id="boxAdd">
+<h3>Adicionar / Busca</h3>
+<input id="termo" value="Comédia" placeholder="O que buscar no TubeMate?"><button style="background:#ff0000;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px" onclick="buscar()">🔍 BUSCAR NO TUBE MATE</button>
+<input id="linkAdd" placeholder="Cole link mp4"><button style="background:#1F4E79;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px" onclick="addLink()">+ ADD LINK</button>
+<input type="file" id="files" accept="video/*" multiple><button style="background:#7b5cff;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px" onclick="addFiles()">📁 ADD VÁRIOS DO CELULAR</button>
+<div class="row"><button style="background:#00a8ff;color:#fff;padding:10px;border:0;border-radius:8px" onclick="abrirCam('user')">🤳 FRONTAL</button><button style="background:#00a8ff;color:#fff;padding:10px;border:0;border-radius:8px" onclick="abrirCam('environment')">📷 TRASEIRA</button></div>
+<video id="cam" autoplay muted playsinline></video>
+<div class="row" id="gravBtns" style="display:none"><button style="background:#ff3b3b;color:#fff;padding:10px;border:0;border-radius:8px" onclick="iniciarGrav()">🔴 GRAVAR</button><button style="background:#333;color:#fff;padding:10px;border:0;border-radius:8px" onclick="pararGrav()">⏹️ PARAR E SALVAR NA GALERIA</button></div>
+<button style="background:#000;color:#fff;width:100%;margin-top:10px;padding:10px;border-radius:8px" onclick="fecharAdd()">FECHAR</button>
+<input type="file" id="rest" accept=".json" style="display:none" onchange="restaurar(event)">
+</div>
+<div class="bbaixo">
+<div class="linha">
+<button style="background:#2d2d2d;color:#fff" onclick="backup()">💾 BACKUP</button>
+<button style="background:#2d2d2d;color:#fff" onclick="document.getElementById('rest').click()">♻️ RESTAURAR</button>
+<button style="background:#00c851;color:#fff" onclick="convidar()">💌 CONVIDAR</button>
+<button style="background:#fff;color:#000" onclick="resetar()">🧹 RESET</button>
+</div>
+<div class="linha">
+<button style="background:#00a8ff;color:#fff" onclick="abrirAdd()">📁 VÁRIOS</button>
+<button style="background:#ff9f00;color:#000" onclick="compartilhar()">🔗 LINK</button>
+<button style="background:#ff2e8b;color:#fff" onclick="abrirAdd()">📼 GRAVAR</button>
+<button style="background:#ff3b3b;color:#fff" onclick="aleatorio()">▶️ KNAY</button>
+</div>
+</div>
+<script>
+let videos=JSON.parse(localStorage.getItem('knaY_tiktok')||'[]');
+if(videos.length==0){videos=[{nome:'Deslize pra cima - Teste',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]}
+const KEY='KNAY-2026-FIXA';
+let stream=null,recorder=null,chunks=[],facing='user';
+function salvar(){localStorage.setItem('knaY_tiktok',JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:')))); document.getElementById('cont').innerText=videos.length}
+function render(){
+  let feed=document.getElementById('feed'); feed.innerHTML='';
+  videos.forEach((v,i)=>{
+    let div=document.createElement('div'); div.className='item';
+    div.innerHTML=`<video src="${v.url}" loop playsinline preload="metadata"></video><div class="overlay"><b>${v.nome}</b></div><div class="lateral"><button onclick="curtir(this)">❤️</button><button onclick="shareUm(${i})">🔗</button><button onclick="rem(${i})">🗑️</button></div>`;
+    feed.appendChild(div);
+  });
+  document.getElementById('cont').innerText=videos.length;
+  let obs=new IntersectionObserver((ents)=>{ents.forEach(en=>{let vd=en.target.querySelector('video'); if(en.isIntersecting) vd.play().catch(()=>{}); else vd.pause();})},{threshold:0.7});
+  document.querySelectorAll('.item').forEach(el=>obs.observe(el));
+}
+function addLink(){let l=document.getElementById('linkAdd').value.trim(); if(!l) return; videos.unshift({nome:'Link '+(videos.length+1),url:l}); salvar(); render(); fecharAdd();}
+function addFiles(){let inp=document.getElementById('files'); for(let f of inp.files){let u=URL.createObjectURL(f); videos.unshift({nome:f.name,url:u});} salvar(); render(); fecharAdd();}
+function rem(i){if(confirm('Apagar 🗑️?')){videos.splice(i,1); salvar(); render();}}
+function aleatorio(){let its=document.querySelectorAll('.item'); if(its.length>0) its[Math.floor(Math.random()*its.length)].scrollIntoView({behavior:'smooth'});}
+function buscar(){let t=document.getElementById('termo').value||'Comédia'; window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(t),'_blank');}
+async function abrirCam(m){facing=m; if(stream) stream.getTracks().forEach(t=>t.stop()); try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:facing},audio:true}); document.getElementById('cam').style.display='block'; document.getElementById('cam').srcObject=stream; document.getElementById('gravBtns').style.display='grid';}catch{alert('Permita a câmera');}}
 function iniciarGrav(){
-  chunks=[];
-  recorder=new MediaRecorder(stream,{mimeType:'video/mp4'});
-  recorder.ondataavailable=e=>{ if(e.data.size>0) chunks.push(e.data) };
+  chunks=[]; recorder=new MediaRecorder(stream);
+  recorder.ondataavailable=e=>{if(e.data.size>0) chunks.push(e.data)};
   recorder.onstop=()=>{
     let blob=new Blob(chunks,{type:'video/mp4'});
     let url=URL.createObjectURL(blob);
-    let nome='KNAY_'+new Date().toISOString().slice(0,19).replace(/:/g,'-')+'.mp4';
-
-    // 1. Salva na lista do app
-    videos.unshift({nome:nome, url:url, tipo:'gravado'});
+    let nome='KNAY_'+Date.now()+'.mp4';
+    videos.unshift({nome:nome,url:url});
     salvar(); render();
-
-    // 2. SALVA AUTOMÁTICO NA GALERIA DO CELULAR
-    let a=document.createElement('a');
-    a.href=url;
-    a.download=nome; // Isso faz baixar pra galeria
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-
-    // 3. Tenta compartilhar direto pra galeria (Android novo)
-    if(navigator.canShare && navigator.canShare({files:[new File([blob], nome, {type:'video/mp4'})]})){
-      navigator.share({files:[new File([blob], nome, {type:'video/mp4'})], title:'MY KNAY', text:nome});
-    }
-
-    alert('📼 Vídeo salvo na galeria! Pasta Downloads: '+nome);
+    let a=document.createElement('a'); a.href=url; a.download=nome; document.body.appendChild(a); a.click(); a.remove();
+    alert('📼 Vídeo salvo na galeria! Downloads/'+nome);
   };
   recorder.start();
-  document.getElementById('gravBtns').innerHTML='<b style="color:red">🔴 GRAVANDO... clica em PARAR</b>';
-  showToast('🔴 Gravando...');
 }
-
-function pararGrav(){
-  if(recorder && recorder.state!=='inactive'){
-    recorder.stop();
-    stream.getTracks().forEach(t=>t.stop());
-    document.getElementById('cam').style.display='none';
-    document.getElementById('gravBtns').style.display='none';
-    showToast('✅ Salvo na galeria');
-  }
-}
-
-function showToast(t){
-  let d=document.createElement('div');
-  d.style='position:fixed;bottom:150px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 18px;border-radius:20px;z-index:9999';
-  d.innerText=t; document.body.appendChild(d); setTimeout(()=>d.remove(),2000);
-}
+function pararGrav(){if(recorder) recorder.stop(); if(stream) stream.getTracks().forEach(t=>t.stop()); document.getElementById('cam').style.display='none'; document.getElementById('gravBtns').style.display='none';}
+function backup(){let blob=new Blob([JSON.stringify({chave:KEY,videos:videos},null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='myknay_backup.json'; a.click();}
+function restaurar(e){let f=e.target.files[0]; let r=new FileReader(); r.onload=ev=>{let d=JSON.parse(ev.target.result); videos=d.videos||d; salvar(); render();}; r.readAsText(f);}
+function resetar(){if(confirm('Apagar tudo?')){videos=[]; localStorage.removeItem('knaY_tiktok'); render();}}
+function convidar(){navigator.clipboard.writeText(location.href).then(()=>alert('Convite copiado'))}
+function compartilhar(){navigator.clipboard.writeText(location.href).then(()=>alert('Link copiado'))}
+function shareUm(i){navigator.clipboard.writeText(videos[i].url).then(()=>alert('Link copiado'))}
+function abrirAdd(){document.getElementById('boxAdd').style.display='block'} function fecharAdd(){document.getElementById('boxAdd').style.display='none'} function curtir(b){b.innerText=b.innerText=='❤️'?'💖':'❤️'}
+window.onload=render;
+</script>
+</body>
+</html>
