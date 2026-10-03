@@ -1,87 +1,74 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MY KNAY - COM AUDIO</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#000;color:#fff;font-family:Arial;overflow:hidden}
-.topo{position:fixed;top:0;left:0;right:0;background:#ff0055;padding:12px;text-align:center;z-index:10;font-weight:bold}
-.chave{position:fixed;top:42px;left:0;right:0;background:#1F4E79;padding:8px;z-index:10;display:flex;justify-content:space-between;align-items:center}
-.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;padding-top:78px;padding-bottom:120px}
-.item{height:calc(100vh - 198px);scroll-snap-align:start;position:relative;background:#000;display:flex;justify-content:center;align-items:center}
-.item video{width:100%;height:100%;object-fit:contain;background:#000}
-.overlay{position:absolute;left:10px;bottom:50px;background:rgba(0,0,0,.6);padding:6px;border-radius:6px;font-size:13px}
-.lateral{position:absolute;right:10px;bottom:30px;display:flex;flex-direction:column;gap:10px}
-.lateral button{width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.25);font-size:20px;color:#fff}
-.audio{position:absolute;left:10px;top:50%;background:rgba(255,0,85,.9);padding:8px 12px;border-radius:20px;border:0;color:#fff;font-weight:bold}
-.boxAdd{position:fixed;top:90px;left:10px;right:10px;background:#fff;color:#000;border-radius:12px;padding:12px;z-index:99;display:none;max-height:80vh;overflow:auto}
-.bbaixo{position:fixed;bottom:0;left:0;right:0;background:#111;padding:6px;display:flex;flex-direction:column;gap:6px;z-index:10}
-.linha{display:flex;gap:6px}.linha button{flex:1;padding:12px 2px;border-radius:10px;border:0;font-weight:bold;font-size:11px}
-input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin-top:6px}
-#cam{width:100%;display:none;margin-top:8px;border-radius:12px}
-</style>
-</head>
-<body>
-<div class="topo">A MY KNAY 🔥 (<span id="cont">0</span>) - TOQUE NO VÍDEO PRA SOM</div>
-<div class="chave"><span>🔑 KNAY-2026-FIXA</span><button onclick="abrirAdd()" style="background:#00e5ff;border:0;padding:6px 12px;border-radius:8px;font-weight:bold">🔍 BUSCA + ADD</button></div>
-<div class="feed" id="feed"></div>
-
-<div class="boxAdd" id="boxAdd">
-<input id="termo" placeholder="Buscar" value="Comédia">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button onclick="buscar()" style="background:#ff0000;color:#fff;padding:12px;border:0;border-radius:8px">🔍 YOUTUBE</button>
-<button onclick="window.open('https://pluto.tv','_blank')" style="background:#000;color:#ff0;padding:12px;border:0;border-radius:8px">📺 FILMES GRÁTIS</button>
-</div>
-<input type="file" id="files" accept="video/*" multiple onchange="addFilesDireto(this)" style="margin-top:10px">
-<button onclick="document.getElementById('files').click()" style="background:#7b5cff;color:#fff;width:100%;padding:14px;border:0;border-radius:8px;margin-top:6px">📁 ADICIONAR DO CELULAR (COM ÁUDIO)</button>
-<input id="linkAdd" placeholder="Cole link mp4 direto" style="margin-top:10px"><button onclick="addLink()" style="background:#1F4E79;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px">+ ADD LINK</button>
-<button onclick="fecharAdd()" style="background:#000;color:#fff;width:100%;margin-top:12px;padding:12px;border-radius:8px">FECHAR</button>
-<input type="file" id="rest" accept=".json" style="display:none" onchange="restaurar(event)">
-</div>
-
-<div class="bbaixo">
-<div class="linha">
-<button onclick="ativarSom()" style="background:#ff0055;color:#fff">🔊 ATIVAR SOM DE TODOS</button>
-<button onclick="backup()" style="background:#333;color:#fff">💾 BACKUP</button>
-<button onclick="resetar()" style="background:#fff;color:#000">🧹 RESET</button>
-</div>
-<div class="linha">
-<button onclick="document.getElementById('files').click()" style="background:#00a8ff;color:#fff">📁 VÁRIOS</button>
-<button onclick="abrirAdd()" style="background:#ff9f00;color:#000">🔍 BUSCA</button>
-<button onclick="abrirAdd()" style="background:#ff2e8b;color:#fff">📼 GRAVAR</button>
-<button onclick="aleatorio()" style="background:#ff3b3b;color:#fff">▶️ KNAY</button>
-</div>
-</div>
-
 <script>
-let videos=[];try{videos=JSON.parse(localStorage.getItem('knaY_FINAL')||'[]')}catch{videos=[]}
-if(videos.length==0){videos=[{nome:'Toque no vídeo pra ligar o som',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]}
+let videos=[]; 
+let videoAtual = null;
+try{videos=JSON.parse(localStorage.getItem('knaY_FINAL')||'[]')}catch{videos=[]}
+if(videos.length==0){videos=[{nome:'Toque pra som',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]}
+
 function salvar(){localStorage.setItem('knaY_FINAL',JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:'))));document.getElementById('cont').innerText=videos.length}
+
+function pausarTodosExceto(atual){
+  document.querySelectorAll('video').forEach(v=>{
+    if(v !== atual){ v.pause(); v.muted=true; }
+  });
+}
+
+function ligarSom(vd){
+  pausarTodosExceto(vd);
+  vd.muted=false; vd.volume=1; vd.play();
+  videoAtual = vd;
+  document.querySelectorAll('.audio').forEach(b=>b.style.display='block');
+  vd.parentElement.querySelector('.audio').style.display='none';
+}
+
 function render(){
   let feed=document.getElementById('feed');feed.innerHTML='';
   videos.forEach((v,i)=>{
     let d=document.createElement('div');d.className='item';
-    d.innerHTML=`<video src="${v.url}" loop playsinline preload="auto" onclick="ligarSom(this)" id="vd${i}"></video>
+    d.innerHTML=`<video src="${v.url}" loop playsinline preload="metadata" id="vd${i}" onclick="ligarSom(this)"></video>
     <button class="audio" onclick="ligarSom(document.getElementById('vd${i}'))">🔊 TOQUE PRA SOM</button>
     <div class="overlay">${v.nome}</div>
-    <div class="lateral"><button onclick="curtir(this)">❤️</button><button onclick="shareUm(${i})">🔗</button><button onclick="rem(${i})">🗑️</button></div>`;
+    <div class="lateral"><button onclick="curtir(this)">❤️</button><button onclick="rem(${i})">🗑️</button></div>`;
     feed.appendChild(d);
   });
-  // autoplay mudo e observa
-  const obs=new IntersectionObserver((ents)=>{ents.forEach(en=>{let vd=en.target.querySelector('video'); if(en.isIntersecting){vd.muted=true; vd.play().catch(()=>{});} else {vd.pause();}});},{threshold:0.6});
+
+  // Só 1 por vez - observador
+  const obs=new IntersectionObserver((ents)=>{
+    ents.forEach(en=>{
+      let vd=en.target.querySelector('video');
+      if(en.isIntersecting){
+        // Pausa todos os outros imediatamente
+        pausarTodosExceto(vd);
+        videoAtual = vd;
+        // Se já liberou som antes, continua com som. Se não, mudo pra autoplay funcionar
+        if(localStorage.getItem('somLiberado')=='sim'){
+            vd.muted=false; vd.volume=1;
+        }else{
+            vd.muted=true;
+        }
+        vd.play().catch(()=>{});
+      }else{
+        if(vd===videoAtual) vd.pause();
+      }
+    });
+  },{threshold:0.7});
+  
   document.querySelectorAll('.item').forEach(el=>obs.observe(el));
+  document.getElementById('cont').innerText=videos.length;
 }
-function ligarSom(vd){ vd.muted=false; vd.volume=1; vd.play(); vd.parentElement.querySelector('.audio').style.display='none'; }
-function ativarSom(){ document.querySelectorAll('video').forEach(v=>{v.muted=false; v.volume=1; v.play();}); document.querySelectorAll('.audio').forEach(b=>b.style.display='none'); }
-function addFilesDireto(input){ if(!input.files.length) return; for(let f of input.files){ let url=URL.createObjectURL(f); videos.unshift({nome:f.name,url:url}); } render(); salvar(); fecharAdd(); alert('✅ '+input.files.length+' vídeos com áudio adicionados!'); }
-function addLink(){ let l=document.getElementById('linkAdd').value.trim(); if(!l) return; if(l.includes('youtube.com')||l.includes('youtu.be')){alert('Link YouTube não toca, baixa o mp4 primeiro'); return;} videos.unshift({nome:'Link '+(videos.length+1),url:l}); render(); salvar(); fecharAdd(); }
-function buscar(){ let q=document.getElementById('termo').value||'Comédia'; window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank'); }
-function rem(i){ if(confirm('Apagar?')){videos.splice(i,1); render(); salvar();} }
-function backup(){ let b=new Blob([JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:')),null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='myknay.json'; a.click(); }
-function restaurar(e){ let f=e.target.files[0]; let r=new FileReader(); r.onload=ev=>{videos=JSON.parse(ev.target.result); render(); salvar();}; r.readAsText(f); }
-function resetar(){ if(confirm('Apagar tudo?')){videos=[]; localStorage.removeItem('knaY_FINAL'); render();} }
-function abrirAdd(){document.getElementById('boxAdd').style.display='block'}function fecharAdd(){document.getElementById('boxAdd').style.display='none'}function curtir(b){b.innerText=b.innerText=='❤️'?'💖':'❤️'}function aleatorio(){let its=document.querySelectorAll('.item'); if(its.length) its[Math.floor(Math.random()*its.length)].scrollIntoView({behavior:'smooth'});}function shareUm(i){navigator.clipboard.writeText(videos[i].url).then(()=>alert('Link copiado'))}
+
+function ativarSom(){ 
+  localStorage.setItem('somLiberado','sim');
+  if(videoAtual){ videoAtual.muted=false; videoAtual.volume=1; videoAtual.play(); }
+  document.querySelectorAll('.audio').forEach(b=>b.style.display='none');
+}
+
+// o resto continua igual
+function mudaBrilho(v){document.getElementById('feed').style.filter=`brightness(${v}%) contrast(120%) saturate(130%)`; document.getElementById('valB').innerText=v+'%';}
+function addFiles(inp){for(let f of inp.files){videos.unshift({nome:f.name,url:URL.createObjectURL(f)});}render();salvar();fecharAdd();}
+function rem(i){if(confirm('Apagar?')){videos.splice(i,1);render();salvar();}}
+function resetar(){if(confirm('Apagar tudo?')){videos=[];localStorage.removeItem('knaY_FINAL');render();}}
+function abrirAdd(){document.getElementById('boxAdd').style.display='block'}function fecharAdd(){document.getElementById('boxAdd').style.display='none'}
+function curtir(b){b.innerText=b.innerText=='❤️'?'💖':'❤️'}
+function aleatorio(){let its=document.querySelectorAll('.item'); if(its.length) its[Math.floor(Math.random()*its.length)].scrollIntoView({behavior:'smooth'});}
 window.onload=render;
-document.body.addEventListener('click',()=>{document.querySelectorAll('video').forEach(v=>{if(!v.paused && v.muted){/*primeiro toque libera som*/}});},{once:true});
 </script>
-</body>
-</html>
