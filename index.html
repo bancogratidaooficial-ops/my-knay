@@ -1,101 +1,136 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>MY KNAY 223 - FIX</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MY KNAY FIX FINAL</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#000;color:#fff;font-family:Arial;overflow:hidden}
-.topo{position:fixed;top:0;left:0;right:0;background:#ff0055;padding:12px;text-align:center;z-index:100;font-weight:bold}
-.chave{position:fixed;top:44px;left:0;right:0;background:#1F4E79;padding:6px 10px;z-index:100;display:flex;justify-content:space-between;font-size:12px;align-items:center}
-.chave button{background:#00d4ff;color:#000;border:0;padding:6px 10px;border-radius:8px;font-weight:bold}
-.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;padding-top:76px;padding-bottom:130px}
-.item{height:calc(100vh - 206px);scroll-snap-align:start;position:relative;background:#000;display:flex;align-items:center}
-.item video{width:100%;height:100%;object-fit:contain}
-.overlay{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.5);padding:4px 8px;border-radius:6px}
-.lateral{position:absolute;right:10px;bottom:20px;display:flex;flex-direction:column;gap:10px}
-.lateral button{width:48px;height:48px;border-radius:50%;border:0;font-size:20px;background:rgba(255,255,255,.25);color:#fff}
-.boxAdd{position:fixed;top:80px;left:10px;right:10px;background:#fff;color:#000;border-radius:12px;padding:12px;z-index:200;display:none;max-height:80vh;overflow:auto}
-input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin-top:6px}
-.bbaixo{position:fixed;bottom:0;left:0;right:0;background:#111;padding:6px;z-index:101;display:flex;flex-direction:column;gap:6px}
-.linha{display:flex;gap:6px}.linha button{flex:1;padding:12px 4px;font-size:10px;border-radius:10px;border:0;font-weight:bold}
-#cam{width:100%;border-radius:12px;display:none;margin-top:8px}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#000;color:#fff;font-family:Arial;overflow:hidden}
+.topo{position:fixed;top:0;left:0;right:0;background:#ff0055;padding:12px;text-align:center;z-index:10;font-weight:bold}
+.chave{position:fixed;top:42px;left:0;right:0;background:#1F4E79;padding:8px;z-index:10;display:flex;justify-content:space-between}
+.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;padding-top:78px;padding-bottom:120px}
+.item{height:calc(100vh - 198px);scroll-snap-align:start;position:relative;background:#111;display:flex;justify-content:center;align-items:center}
+.item video{width:100%;height:100%;object-fit:contain;background:#000}
+.overlay{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.6);padding:6px;border-radius:6px;font-size:13px}
+.lateral{position:absolute;right:10px;bottom:30px;display:flex;flex-direction:column;gap:10px}
+.lateral button{width:48px;height:48px;border-radius:50%;border:0;background:rgba(255,255,255,.2);font-size:20px;color:#fff}
+.boxAdd{position:fixed;top:90px;left:10px;right:10px;background:#fff;color:#000;border-radius:12px;padding:12px;z-index:99;display:none}
+input{width:100%;padding:12px;border:1px solid #ccc;border-radius:8px;margin-top:8px}
+.bbaixo{position:fixed;bottom:0;left:0;right:0;background:#111;padding:6px;display:flex;flex-direction:column;gap:6px;z-index:10}
+.linha{display:flex;gap:6px}.linha button{flex:1;padding:12px 2px;border-radius:10px;border:0;font-weight:bold;font-size:11px}
+#cam{width:100%;display:none;margin-top:8px;border-radius:12px}
 </style>
 </head>
 <body>
-<div class="topo">A MY KNAY 🔥 (<span id="cont">0</span>) - DESLIZE PRA CIMA</div>
-<div class="chave">
-<span>🔑 KNAY-2026-FIXA ✅</span>
-<button onclick="abrirAdd()">🔍 BUSCA TUBE MATE + YOUTUBE</button>
-</div>
-
+<div class="topo">A MY KNAY 🔥 (<span id="cont">0</span>) - DESLIZE</div>
+<div class="chave"><span>🔑 KNAY-2026-FIXA</span><button onclick="abrirAdd()" style="background:#00e5ff;border:0;padding:6px 12px;border-radius:8px;font-weight:bold">🔍 BUSCA + ADD</button></div>
 <div class="feed" id="feed"></div>
 
 <div class="boxAdd" id="boxAdd">
-<h3>🔍 BUSCA</h3>
-<input id="termo" value="Comédia" placeholder="Digite: ação, comédia, etc">
+<h3>ADD E BUSCA</h3>
+<input id="termo" placeholder="Digite filme ex: Comédia" value="Comédia">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button style="background:#ff0000;color:#fff;padding:12px;border:0;border-radius:8px" onclick="buscarYT()">🔍 YOUTUBE</button>
-<button style="background:#ff8800;color:#fff;padding:12px;border:0;border-radius:8px" onclick="buscarTM()">🔍 TUBE MATE</button>
+<button onclick="buscar('yt')" style="background:#ff0000;color:#fff;padding:12px;border:0;border-radius:8px">🔍 YOUTUBE</button>
+<button onclick="buscar('tm')" style="background:#ff8800;color:#fff;padding:12px;border:0;border-radius:8px">🔍 TUBE MATE</button>
 </div>
-<hr style="margin:10px 0">
-<input id="linkAdd" placeholder="Cole link mp4"><button style="background:#1F4E79;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px" onclick="addLink()">+ ADD LINK</button>
-<input type="file" id="files" accept="video/*" multiple style="margin-top:10px"><button style="background:#7b5cff;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px" onclick="addFiles()">📁 ADD VÁRIOS DO CELULAR</button>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
-<button style="background:#00a8ff;color:#fff;padding:10px;border:0;border-radius:8px" onclick="abrirCam('user')">🤳 FRONTAL</button>
-<button style="background:#00a8ff;color:#fff;padding:10px;border:0;border-radius:8px" onclick="abrirCam('environment')">📷 TRASEIRA</button>
+<input id="linkAdd" placeholder="Cole LINK DIRETO mp4 (ex: https://...mp4)">
+<button onclick="addLink()" style="background:#1F4E79;color:#fff;width:100%;padding:12px;border:0;border-radius:8px;margin-top:6px">+ ADICIONAR LINK DIRETO</button>
+<p style="font-size:11px;color:#666;margin-top:4px">⚠️ Link de YouTube não toca direto. Tem que ser link.mp4 ou do Drive direto.</p>
+
+<label style="display:block;margin-top:12px;font-weight:bold">📁 DO CELULAR (clique abaixo)</label>
+<input type="file" id="files" accept="video/*" multiple onchange="addFilesDireto(this)">
+<button onclick="document.getElementById('files').click()" style="background:#7b5cff;color:#fff;width:100%;padding:14px;border:0;border-radius:8px;margin-top:6px">📁 ESCOLHER VÁRIOS VÍDEOS</button>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+<button onclick="abrirCam('user')" style="background:#00a8ff;color:#fff;padding:10px;border:0;border-radius:8px">🤳 FRONTAL</button>
+<button onclick="abrirCam('environment')" style="background:#00a8ff;color:#fff;padding:10px;border:0;border-radius:8px">📷 TRASEIRA</button>
 </div>
 <video id="cam" autoplay muted playsinline></video>
-<div id="gravBtns" style="display:none;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px"><button style="background:#ff3b3b;color:#fff;padding:12px;border:0;border-radius:8px" onclick="iniciarGrav()">🔴 GRAVAR</button><button style="background:#333;color:#fff;padding:12px;border:0;border-radius:8px" onclick="pararGrav()">⏹️ SALVAR NA GALERIA</button></div>
-<button style="background:#000;color:#fff;width:100%;margin-top:10px;padding:10px;border-radius:8px;border:0" onclick="fecharAdd()">FECHAR</button>
+<div id="gravBtns" style="display:none;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px">
+<button onclick="iniciarGrav()" style="background:#ff3b3b;color:#fff;padding:12px;border:0;border-radius:8px">🔴 GRAVAR</button>
+<button onclick="pararGrav()" style="background:#000;color:#fff;padding:12px;border:0;border-radius:8px">⏹️ SALVAR GALERIA</button>
+</div>
+<button onclick="fecharAdd()" style="background:#000;color:#fff;width:100%;margin-top:12px;padding:12px;border-radius:8px">FECHAR</button>
 <input type="file" id="rest" accept=".json" style="display:none" onchange="restaurar(event)">
 </div>
 
 <div class="bbaixo">
 <div class="linha">
-<button style="background:#2d2d2d;color:#fff" onclick="backup()">💾 BACKUP</button>
-<button style="background:#2d2d2d;color:#fff" onclick="document.getElementById('rest').click()">♻️ RESTAURAR</button>
-<button style="background:#00c851;color:#fff" onclick="convidar()">💌 CONVIDAR</button>
-<button style="background:#fff;color:#000" onclick="resetar()">🧹 RESET</button>
+<button onclick="backup()" style="background:#333;color:#fff">💾 BACKUP</button>
+<button onclick="document.getElementById('rest').click()" style="background:#333;color:#fff">♻️ RESTAURAR</button>
+<button onclick="convidar()" style="background:#00c851;color:#fff">💌 CONVIDAR</button>
+<button onclick="resetar()" style="background:#fff;color:#000">🧹 RESET</button>
 </div>
 <div class="linha">
-<button style="background:#00a8ff;color:#fff" onclick="abrirAdd()">📁 VÁRIOS</button>
-<button style="background:#ff9f00;color:#000" onclick="abrirAdd()">🔍 BUSCA</button>
-<button style="background:#ff2e8b;color:#fff" onclick="abrirAdd()">📼 GRAVAR</button>
-<button style="background:#ff3b3b;color:#fff" onclick="aleatorio()">▶️ KNAY</button>
+<button onclick="document.getElementById('files').click()" style="background:#00a8ff;color:#fff">📁 VÁRIOS</button>
+<button onclick="abrirAdd()" style="background:#ff9f00;color:#000">🔍 BUSCA</button>
+<button onclick="abrirAdd()" style="background:#ff2e8b;color:#fff">📼 GRAVAR</button>
+<button onclick="aleatorio()" style="background:#ff3b3b;color:#fff">▶️ KNAY</button>
 </div>
 </div>
 
 <script>
-let videos=JSON.parse(localStorage.getItem('knaY_tiktok')||'[]');
-if(videos.length==0){videos=[{nome:'Teste - clique no vídeo pra rodar',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]}
-let stream=null,recorder=null,chunks=[];
-function salvar(){localStorage.setItem('knaY_tiktok',JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:'))));document.getElementById('cont').innerText=videos.length}
+let videos = [];
+try{ videos = JSON.parse(localStorage.getItem('knaY_FINAL')||'[]'); }catch(e){ videos=[]; }
+if(videos.length==0){ videos=[{nome:'Vídeo de teste - clique pra rodar',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]; }
+
+let stream=null, recorder=null, chunks=[];
+function salvar(){
+  // salva só os links, arquivos blob ficam só na sessão
+  let paraSalvar = videos.filter(v=>!v.url.startsWith('blob:'));
+  localStorage.setItem('knaY_FINAL', JSON.stringify(paraSalvar));
+  document.getElementById('cont').innerText = videos.length;
+}
 function render(){
-  let feed=document.getElementById('feed');feed.innerHTML='';
+  let feed=document.getElementById('feed'); feed.innerHTML='';
   videos.forEach((v,i)=>{
-    let div=document.createElement('div');div.className='item';
-    div.innerHTML=`<video src="${v.url}" loop muted playsinline preload="auto" onclick="this.paused?this.play():this.pause()"></video><div class="overlay">${v.nome}</div><div class="lateral"><button onclick="curtir(this)">❤️</button><button onclick="shareUm(${i})">🔗</button><button onclick="rem(${i})">🗑️</button></div>`;
-    feed.appendChild(div);
+    let d=document.createElement('div'); d.className='item';
+    d.innerHTML=`<video src="${v.url}" loop muted playsinline controls preload="auto" onclick="this.play()"></video>
+    <div class="overlay">${v.nome}</div>
+    <div class="lateral"><button onclick="curtir(this)">❤️</button><button onclick="shareUm(${i})">🔗</button><button onclick="rem(${i})">🗑️</button></div>`;
+    feed.appendChild(d);
   });
   document.getElementById('cont').innerText=videos.length;
-  const obs=new IntersectionObserver((ents)=>{ents.forEach(en=>{let vd=en.target.querySelector('video'); if(en.isIntersecting){vd.play().catch(()=>{});} else {vd.pause();}});},{threshold:0.6});
-  document.querySelectorAll('.item').forEach(el=>obs.observe(el));
 }
-function addLink(){let l=document.getElementById('linkAdd').value.trim();if(!l)return;videos.unshift({nome:'Link '+(videos.length+1),url:l});salvar();render();fecharAdd();}
-function addFiles(){let inp=document.getElementById('files');for(let f of inp.files){let u=URL.createObjectURL(f);videos.unshift({nome:f.name,url:u});}salvar();render();fecharAdd();}
-function rem(i){if(confirm('Apagar?')){videos.splice(i,1);salvar();render();}}
-function aleatorio(){let its=document.querySelectorAll('.item');if(its.length>0)its[Math.floor(Math.random()*its.length)].scrollIntoView({behavior:'smooth'});}
-function buscarYT(){let t=document.getElementById('termo').value||'Comédia';window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(t),'_blank');}
-function buscarTM(){let t=document.getElementById('termo').value||'Comédia';window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(t+' TubeMate'),' _blank');}
-async function abrirCam(m){if(stream)stream.getTracks().forEach(t=>t.stop());try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:m},audio:true});document.getElementById('cam').style.display='block';document.getElementById('cam').srcObject=stream;document.getElementById('gravBtns').style.display='grid';}catch{alert('Permita a câmera');}}
-function iniciarGrav(){chunks=[];recorder=new MediaRecorder(stream);recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};recorder.onstop=()=>{let blob=new Blob(chunks,{type:'video/mp4'});let url=URL.createObjectURL(blob);let nome='KNAY_'+Date.now()+'.mp4';videos.unshift({nome:nome,url:url});salvar();render();let a=document.createElement('a');a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();alert('Salvo na galeria: '+nome);};recorder.start();}
-function pararGrav(){if(recorder)recorder.stop();if(stream)stream.getTracks().forEach(t=>t.stop());document.getElementById('cam').style.display='none';document.getElementById('gravBtns').style.display='none';}
-function backup(){let blob=new Blob([JSON.stringify({videos:videos},null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='myknay_backup.json';a.click();}
-function restaurar(e){let f=e.target.files[0];let r=new FileReader();r.onload=ev=>{let d=JSON.parse(ev.target.result);videos=d.videos||d;salvar();render();};r.readAsText(f);}
-function resetar(){if(confirm('Apagar tudo?')){videos=[];localStorage.removeItem('knaY_tiktok');render();}}
-function convidar(){navigator.clipboard.writeText(location.href).then(()=>alert('Convite copiado'))}
-function shareUm(i){navigator.clipboard.writeText(videos[i].url).then(()=>alert('Link copiado'))}
-function abrirAdd(){document.getElementById('boxAdd').style.display='block'}function fecharAdd(){document.getElementById('boxAdd').style.display='none'}function curtir(b){b.innerText=b.innerText=='❤️'?'💖':'❤️'}
+
+function addFilesDireto(input){
+  if(!input.files || input.files.length==0) return;
+  for(let f of input.files){
+    let url = URL.createObjectURL(f);
+    videos.unshift({nome:f.name, url:url});
+  }
+  render(); salvar(); fecharAdd();
+  alert('✅ '+input.files.length+' vídeos adicionados direto do celular!');
+}
+
+function addLink(){
+  let l=document.getElementById('linkAdd').value.trim();
+  if(!l){ alert('Cole um link'); return; }
+  if(l.includes('youtube.com') || l.includes('youtu.be')){
+    alert('⚠️ Link de YouTube não toca direto no <video>. Use TubeMate pra baixar o mp4 e depois cole o link direto, ou use a busca pra abrir no YouTube.');
+    window.open(l,'_blank');
+    return;
+  }
+  videos.unshift({nome:'Link '+(videos.length+1), url:l});
+  render(); salvar(); fecharAdd();
+}
+
+function buscar(tipo){
+  let q=document.getElementById('termo').value||'Comédia';
+  let url='https://www.youtube.com/results?search_query='+encodeURIComponent(q);
+  window.open(url,'_blank');
+}
+
+async function abrirCam(m){ if(stream) stream.getTracks().forEach(t=>t.stop()); try{ stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:m},audio:true}); document.getElementById('cam').style.display='block'; document.getElementById('cam').srcObject=stream; document.getElementById('gravBtns').style.display='grid'; }catch(e){ alert('Permita a câmera: '+e); } }
+function iniciarGrav(){ chunks=[]; recorder=new MediaRecorder(stream); recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)}; recorder.onstop=()=>{ let blob=new Blob(chunks,{type:'video/mp4'}); let url=URL.createObjectURL(blob); let nome='KNAY_'+Date.now()+'.mp4'; videos.unshift({nome:nome,url:url}); render(); let a=document.createElement('a'); a.href=url; a.download=nome; a.click(); alert('Salvo na galeria Downloads/'+nome); }; recorder.start(); }
+function pararGrav(){ if(recorder) recorder.stop(); if(stream) stream.getTracks().forEach(t=>t.stop()); document.getElementById('cam').style.display='none'; document.getElementById('gravBtns').style.display='none'; }
+
+function rem(i){ if(confirm('Apagar?')){ videos.splice(i,1); render(); salvar(); } }
+function backup(){ let blob=new Blob([JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:')),null,2)],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='myknay_backup.json'; a.click(); }
+function restaurar(e){ let f=e.target.files[0]; let r=new FileReader(); r.onload=ev=>{ try{ videos=JSON.parse(ev.target.result); render(); salvar(); }catch{ alert('Erro no backup'); } }; r.readAsText(f); }
+function resetar(){ if(confirm('Apagar tudo?')){ videos=[]; localStorage.removeItem('knaY_FINAL'); render(); } }
+function convidar(){ navigator.clipboard.writeText(location.href).then(()=>alert('Link copiado')); }
+function shareUm(i){ navigator.clipboard.writeText(videos[i].url).then(()=>alert('Link copiado: '+videos[i].nome)); }
+function abrirAdd(){ document.getElementById('boxAdd').style.display='block'; } function fecharAdd(){ document.getElementById('boxAdd').style.display='none'; } function curtir(b){ b.innerText=b.innerText=='❤️'?'💖':'❤️'; } function aleatorio(){ let its=document.querySelectorAll('.item'); if(its.length) its[Math.floor(Math.random()*its.length)].scrollIntoView({behavior:'smooth'}); }
+
 window.onload=render;
 </script>
 </body>
