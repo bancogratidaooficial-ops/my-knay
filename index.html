@@ -1,74 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MY KNAY FIX</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#000;color:#fff;font-family:Arial;overflow:hidden}
+.topo{position:fixed;top:0;left:0;right:0;background:#ff0055;padding:12px;text-align:center;z-index:20;font-weight:bold}
+.chave{position:fixed;top:44px;left:0;right:0;background:#1F4E79;padding:8px;display:flex;justify-content:space-between;z-index:20}
+.brilho{position:fixed;top:76px;left:0;right:0;background:#222;padding:6px 10px;display:flex;gap:8px;align-items:center;z-index:20}
+.brilho input{flex:1}
+.feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;padding-top:112px;padding-bottom:130px;filter:brightness(150%) contrast(115%)}
+.item{height:calc(100vh - 242px);scroll-snap-align:start;position:relative;background:#000;display:flex;align-items:center;justify-content:center}
+.item video{width:100%;height:100%;object-fit:contain;background:#000}
+.btAudio{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(255,0,85,.9);border:0;color:#fff;padding:14px 18px;border-radius:30px;font-weight:bold;font-size:16px}
+.overlay{position:absolute;left:10px;bottom:20px;background:rgba(0,0,0,.6);padding:6px;border-radius:6px;font-size:12px;max-width:70%}
+.lateral{position:absolute;right:10px;bottom:20px;display:flex;flex-direction:column;gap:10px}
+.lateral button{width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.3);color:#fff}
+.boxAdd{position:fixed;top:110px;left:10px;right:10px;background:#fff;color:#000;border-radius:12px;padding:12px;z-index:99;display:none}
+.bbaixo{position:fixed;bottom:0;left:0;right:0;background:#111;padding:6px;display:flex;flex-direction:column;gap:6px;z-index:20}
+.linha{display:flex;gap:6px}.linha button{flex:1;padding:12px 2px;border-radius:10px;border:0;font-weight:bold;font-size:11px}
+</style>
+</head>
+<body>
+<div class="topo">A MY KNAY 🔥 (<span id="cont">0</span>) - SÓ 1 SOM</div>
+<div class="chave"><span>🔑 KNAY-2026</span><button onclick="document.getElementById('boxAdd').style.display='block'" style="background:#00e5ff;border:0;padding:6px 12px;border-radius:8px;font-weight:bold">🔍 ADD</button></div>
+<div class="brilho"><span>☀️</span><input id="rgB" type="range" min="100" max="250" value="150" oninput="document.getElementById('feed').style.filter='brightness('+this.value+'%) contrast(115%)';document.getElementById('vB').innerText=this.value+'%'"><span id="vB">150%</span><button onclick="rgB.value=220;rgB.oninput()" style="background:#ff0;border:0;padding:6px;border-radius:6px">MAX</button></div>
+<div class="feed" id="feed"></div>
+
+<div class="boxAdd" id="boxAdd">
+<input type="file" id="files" accept="video/*" multiple style="display:none" onchange="addFiles(this)">
+<button onclick="files.click()" style="background:#7b5cff;color:#fff;width:100%;padding:14px;border:0;border-radius:10px;font-weight:bold">📁 ADICIONAR VÍDEOS DO CELULAR</button>
+<button onclick="boxAdd.style.display='none'" style="background:#000;color:#fff;width:100%;padding:10px;border-radius:8px;margin-top:10px">FECHAR</button>
+</div>
+
+<div class="bbaixo">
+<div class="linha">
+<button onclick="liberarSom()" style="background:#ff0055;color:#fff">🔊 ATIVAR SOM</button>
+<button onclick="backup()" style="background:#333;color:#fff">💾 BACKUP</button>
+<button onclick="if(confirm('Apagar?')){videos=[];localStorage.removeItem('knaY_FINAL');render()}" style="background:#fff;color:#000">🧹 RESET</button>
+</div>
+<div class="linha">
+<button onclick="files.click()" style="background:#00a8ff;color:#fff">📁 VÁRIOS</button>
+<button onclick="boxAdd.style.display='block'" style="background:#ff9f00;color:#000">🔍 BUSCA</button>
+<button onclick="document.querySelectorAll('.item')[Math.floor(Math.random()*document.querySelectorAll('.item').length)]?.scrollIntoView({behavior:'smooth'})" style="background:#ff3b3b;color:#fff">▶️ KNAY</button>
+</div>
+</div>
+
 <script>
-let videos=[]; 
-let videoAtual = null;
+let videos=[]; let atual=null;
 try{videos=JSON.parse(localStorage.getItem('knaY_FINAL')||'[]')}catch{videos=[]}
-if(videos.length==0){videos=[{nome:'Toque pra som',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]}
+if(!videos.length){videos=[{nome:'Teste - toque para som',url:'https://www.w3schools.com/html/mov_bbb.mp4'}]}
 
-function salvar(){localStorage.setItem('knaY_FINAL',JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:'))));document.getElementById('cont').innerText=videos.length}
-
-function pausarTodosExceto(atual){
-  document.querySelectorAll('video').forEach(v=>{
-    if(v !== atual){ v.pause(); v.muted=true; }
-  });
-}
-
-function ligarSom(vd){
-  pausarTodosExceto(vd);
-  vd.muted=false; vd.volume=1; vd.play();
-  videoAtual = vd;
-  document.querySelectorAll('.audio').forEach(b=>b.style.display='block');
-  vd.parentElement.querySelector('.audio').style.display='none';
-}
+function salvar(){localStorage.setItem('knaY_FINAL',JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:'))));}
+function pausarTodos(menos){document.querySelectorAll('video').forEach(v=>{if(v!==menos){v.pause();}});}
 
 function render(){
-  let feed=document.getElementById('feed');feed.innerHTML='';
+  const feed=document.getElementById('feed'); feed.innerHTML='';
+  document.getElementById('cont').innerText=videos.length;
   videos.forEach((v,i)=>{
-    let d=document.createElement('div');d.className='item';
-    d.innerHTML=`<video src="${v.url}" loop playsinline preload="metadata" id="vd${i}" onclick="ligarSom(this)"></video>
-    <button class="audio" onclick="ligarSom(document.getElementById('vd${i}'))">🔊 TOQUE PRA SOM</button>
+    const div=document.createElement('div'); div.className='item';
+    div.innerHTML=`<video id="v${i}" src="${v.url}" loop playsinline preload="metadata"></video>
+    <button class="btAudio" id="b${i}">🔊 TOQUE PRA SOM</button>
     <div class="overlay">${v.nome}</div>
-    <div class="lateral"><button onclick="curtir(this)">❤️</button><button onclick="rem(${i})">🗑️</button></div>`;
-    feed.appendChild(d);
+    <div class="lateral"><button onclick="videos.splice(${i},1);salvar();render()">🗑️</button></div>`;
+    feed.appendChild(div);
+    const vd=div.querySelector('video'); const bt=div.querySelector('button.btAudio');
+    const playThis=()=>{
+      pausarTodos(vd);
+      atual=vd;
+      if(localStorage.getItem('somOK')){vd.muted=false; vd.volume=1;}
+      else{vd.muted=true;}
+      vd.play().catch(()=>{});
+      bt.style.display='none';
+    };
+    bt.onclick=()=>{localStorage.setItem('somOK','1'); vd.muted=false; vd.volume=1; vd.play(); bt.style.display='none'; pausarTodos(vd); atual=vd;};
+    vd.onclick=bt.onclick;
+    vd.addEventListener('play',()=>{pausarTodos(vd);});
   });
 
-  // Só 1 por vez - observador
-  const obs=new IntersectionObserver((ents)=>{
-    ents.forEach(en=>{
-      let vd=en.target.querySelector('video');
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      const vd=en.target.querySelector('video'); const bt=en.target.querySelector('.btAudio');
       if(en.isIntersecting){
-        // Pausa todos os outros imediatamente
-        pausarTodosExceto(vd);
-        videoAtual = vd;
-        // Se já liberou som antes, continua com som. Se não, mudo pra autoplay funcionar
-        if(localStorage.getItem('somLiberado')=='sim'){
-            vd.muted=false; vd.volume=1;
-        }else{
-            vd.muted=true;
-        }
-        vd.play().catch(()=>{});
+        pausarTodos(vd); atual=vd;
+        if(localStorage.getItem('somOK')){vd.muted=false; vd.volume=1;}else{vd.muted=true;}
+        vd.play().catch(()=>{}); 
+        if(localStorage.getItem('somOK')) bt.style.display='none'; else bt.style.display='block';
       }else{
-        if(vd===videoAtual) vd.pause();
+        vd.pause();
       }
     });
-  },{threshold:0.7});
-  
+  },{threshold:0.6});
   document.querySelectorAll('.item').forEach(el=>obs.observe(el));
-  document.getElementById('cont').innerText=videos.length;
 }
-
-function ativarSom(){ 
-  localStorage.setItem('somLiberado','sim');
-  if(videoAtual){ videoAtual.muted=false; videoAtual.volume=1; videoAtual.play(); }
-  document.querySelectorAll('.audio').forEach(b=>b.style.display='none');
-}
-
-// o resto continua igual
-function mudaBrilho(v){document.getElementById('feed').style.filter=`brightness(${v}%) contrast(120%) saturate(130%)`; document.getElementById('valB').innerText=v+'%';}
-function addFiles(inp){for(let f of inp.files){videos.unshift({nome:f.name,url:URL.createObjectURL(f)});}render();salvar();fecharAdd();}
-function rem(i){if(confirm('Apagar?')){videos.splice(i,1);render();salvar();}}
-function resetar(){if(confirm('Apagar tudo?')){videos=[];localStorage.removeItem('knaY_FINAL');render();}}
-function abrirAdd(){document.getElementById('boxAdd').style.display='block'}function fecharAdd(){document.getElementById('boxAdd').style.display='none'}
-function curtir(b){b.innerText=b.innerText=='❤️'?'💖':'❤️'}
-function aleatorio(){let its=document.querySelectorAll('.item'); if(its.length) its[Math.floor(Math.random()*its.length)].scrollIntoView({behavior:'smooth'});}
-window.onload=render;
+function addFiles(inp){ for(const f of inp.files){ videos.unshift({nome:f.name,url:URL.createObjectURL(f)});} salvar(); render(); document.getElementById('boxAdd').style.display='none';}
+function liberarSom(){ localStorage.setItem('somOK','1'); if(atual){atual.muted=false; atual.volume=1; atual.play();} document.querySelectorAll('.btAudio').forEach(b=>b.style.display='none');}
+function backup(){ const blob=new Blob([JSON.stringify(videos.filter(v=>!v.url.startsWith('blob:')))],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='myknay.json'; a.click();}
+render();
 </script>
+</body>
+</html>
